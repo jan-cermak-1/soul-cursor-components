@@ -496,6 +496,10 @@
 
                 <div class="nav-section">
                     <div class="nav-section-title">Components</div>
+                    <div class="nav-item" data-section="main-navigation">
+                        <span class="nav-item-icon">🧭</span>
+                        <span>Main Navigation</span>
+                    </div>
                     <div class="nav-item" data-section="trending-widget">
                         <span class="nav-item-icon">📊</span>
                         <span>Trending Widget</span>
@@ -613,6 +617,215 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <!-- Main Navigation Section -->
+            <section class="section" id="main-navigation">
+                <div class="content-header">
+                    <h1 class="content-title">Main Navigation</h1>
+                    <p class="content-subtitle">Vertical sidebar navigation with icons, perfect for app navigation</p>
+                </div>
+
+                <div class="content-body">
+                    <div class="section-heading">Demo</div>
+                    
+                    <div class="demo-container" style="justify-content: flex-start; min-height: 600px; background: #0d1117;">
+                        <main-navigation active="dashboard"></main-navigation>
+                        <div style="margin-left: 80px; padding: 32px; color: #e6edf3;">
+                            <h2 style="font-size: 24px; margin-bottom: 12px;">Navigation Demo</h2>
+                            <p style="color: #8b949e;">Click on navigation items to see the active state change.</p>
+                            <div id="nav-log" style="margin-top: 24px; padding: 16px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; font-family: monospace; font-size: 12px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="section-heading">Usage</div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this, 'nav-html-usage')">Copy</button>
+                        </div>
+                        <pre id="nav-html-usage"><code>&lt;!-- Simple usage --&gt;
+&lt;main-navigation active="dashboard"&gt;&lt;/main-navigation&gt;
+
+&lt;!-- With JavaScript --&gt;
+&lt;main-navigation id="myNav"&gt;&lt;/main-navigation&gt;
+
+&lt;script&gt;
+  const nav = document.getElementById('myNav');
+  
+  // Set active item
+  nav.setActive('home');
+  
+  // Get active item
+  console.log(nav.getActive());
+  
+  // Listen to navigation changes
+  nav.addEventListener('nav-change', (e) =&gt; {
+    console.log('Navigation changed to:', e.detail.item);
+  });
+  
+  // Listen to avatar clicks
+  nav.addEventListener('avatar-click', () =&gt; {
+    console.log('Avatar clicked');
+  });
+&lt;/script&gt;</code></pre>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">React</span>
+                            <button class="copy-btn" onclick="copyCode(this, 'nav-react-usage')">Copy</button>
+                        </div>
+                        <pre id="nav-react-usage"><code>import '@soul/components';
+import { useRef, useEffect, useState } from 'react';
+
+function App() {
+  const navRef = useRef(null);
+  const [activeItem, setActiveItem] = useState('dashboard');
+  
+  useEffect(() => {
+    const nav = navRef.current;
+    
+    const handleNavChange = (e) =&gt; {
+      setActiveItem(e.detail.item);
+    };
+    
+    const handleAvatarClick = () =&gt; {
+      console.log('Avatar clicked');
+    };
+    
+    nav.addEventListener('nav-change', handleNavChange);
+    nav.addEventListener('avatar-click', handleAvatarClick);
+    
+    return () =&gt; {
+      nav.removeEventListener('nav-change', handleNavChange);
+      nav.removeEventListener('avatar-click', handleAvatarClick);
+    };
+  }, []);
+  
+  return (
+    &lt;div&gt;
+      &lt;main-navigation ref={navRef} active={activeItem} /&gt;
+      &lt;div style={{ marginLeft: '56px' }}&gt;
+        &lt;h1&gt;Current page: {activeItem}&lt;/h1&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+                    </div>
+
+                    <div class="section-heading">API Reference</div>
+
+                    <div class="api-section">
+                        <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Attributes</h3>
+                        <table class="api-table">
+                            <thead>
+                                <tr>
+                                    <th>Attribute</th>
+                                    <th>Type</th>
+                                    <th>Default</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>active</code></td>
+                                    <td><code>string</code></td>
+                                    <td><code>null</code></td>
+                                    <td>ID of the currently active navigation item</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="api-section">
+                        <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Methods</h3>
+                        <table class="api-table">
+                            <thead>
+                                <tr>
+                                    <th>Method</th>
+                                    <th>Parameters</th>
+                                    <th>Returns</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>setActive()</code></td>
+                                    <td><code>itemId: string</code></td>
+                                    <td><code>void</code></td>
+                                    <td>Set the active navigation item</td>
+                                </tr>
+                                <tr>
+                                    <td><code>getActive()</code></td>
+                                    <td>-</td>
+                                    <td><code>string</code></td>
+                                    <td>Get the currently active item ID</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="api-section">
+                        <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Events</h3>
+                        <table class="api-table">
+                            <thead>
+                                <tr>
+                                    <th>Event</th>
+                                    <th>Detail</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>nav-change</code></td>
+                                    <td><code>{ item: string }</code></td>
+                                    <td>Fired when navigation item is clicked</td>
+                                </tr>
+                                <tr>
+                                    <td><code>avatar-click</code></td>
+                                    <td><code>{}</code></td>
+                                    <td>Fired when user avatar is clicked</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="api-section">
+                        <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Available Items</h3>
+                        <table class="api-table">
+                            <thead>
+                                <tr>
+                                    <th>Item ID</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>dashboard</code></td><td>Main dashboard icon</td></tr>
+                                <tr><td><code>home</code></td><td>Home icon</td></tr>
+                                <tr><td><code>grid</code></td><td>Grid/Dashboard icon</td></tr>
+                                <tr><td><code>analytics</code></td><td>Analytics/Chart icon</td></tr>
+                                <tr><td><code>schedule</code></td><td>Timer/Schedule icon</td></tr>
+                                <tr><td><code>network</code></td><td>Network/Connections icon</td></tr>
+                                <tr><td><code>notifications</code></td><td>Bell/Notifications icon</td></tr>
+                                <tr><td><code>calendar</code></td><td>Calendar/Events icon</td></tr>
+                                <tr><td><code>share</code></td><td>Share/Social icon</td></tr>
+                                <tr><td><code>ai</code></td><td>Robot/AI icon</td></tr>
+                                <tr><td><code>favorites</code></td><td>Star/Favorites icon</td></tr>
+                                <tr><td><code>add</code></td><td>Plus button</td></tr>
+                                <tr><td><code>view</code></td><td>Eye/View icon</td></tr>
+                                <tr><td><code>help</code></td><td>Question/Help icon</td></tr>
+                                <tr><td><code>settings</code></td><td>Settings icon</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <footer>
+                        Built with ❤️ by Soul Team | 
+                        <a href="https://github.com/jan-cermak-1/soul-cursor-components" target="_blank">View on GitHub</a>
+                    </footer>
                 </div>
             </section>
 
@@ -835,6 +1048,31 @@ export default {
                 }, 2000);
             });
         }
+
+        // Main Navigation Demo
+        setTimeout(() => {
+            const mainNav = document.querySelector('main-navigation');
+            const navLog = document.getElementById('nav-log');
+            
+            if (mainNav && navLog) {
+                mainNav.addEventListener('nav-change', (e) => {
+                    const timestamp = new Date().toLocaleTimeString();
+                    navLog.innerHTML = `<div style="margin-bottom: 8px;">
+                        <span style="color: #58a6ff;">[${timestamp}]</span> 
+                        <span style="color: #3fb950;">nav-change</span>
+                        <span style="color: #e6edf3;">→ item: <span style="color: #79c0ff;">"${e.detail.item}"</span></span>
+                    </div>` + navLog.innerHTML;
+                });
+                
+                mainNav.addEventListener('avatar-click', () => {
+                    const timestamp = new Date().toLocaleTimeString();
+                    navLog.innerHTML = `<div style="margin-bottom: 8px;">
+                        <span style="color: #58a6ff;">[${timestamp}]</span> 
+                        <span style="color: #d2a8ff;">avatar-click</span>
+                    </div>` + navLog.innerHTML;
+                });
+            }
+        }, 100);
 
         // Mobile menu toggle (for future implementation)
         const sidebar = document.querySelector('.sidebar');
