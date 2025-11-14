@@ -58,10 +58,16 @@ class MainNavigation extends HTMLElement {
         background: #111114;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         padding: 12px;
         box-sizing: border-box;
         gap: 12px;
+        transition: width 0.3s ease;
+        overflow: hidden;
+      }
+
+      .nav-container:hover {
+        width: 210px;
       }
       
       :host([fixed]) .nav-container {
@@ -72,20 +78,44 @@ class MainNavigation extends HTMLElement {
       }
 
       .nav-logo {
-        width: 36px;
+        width: 100%;
         height: 36px;
         border-radius: 6px;
         display: flex;
         align-items: center;
-        justify-content: center;
+        gap: 9px;
         cursor: pointer;
         background: transparent;
         flex-shrink: 0;
+        padding: 6px;
+        overflow: hidden;
       }
 
-      .nav-logo img {
+      .nav-logo-icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-logo-icon svg {
         width: 24.889px;
         height: 24.889px;
+      }
+
+      .nav-logo-text {
+        font-size: 16px;
+        font-weight: 700;
+        color: #F9F9FA;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.3s ease 0.1s;
+      }
+
+      .nav-container:hover .nav-logo-text {
+        opacity: 1;
       }
 
       .nav-divider {
@@ -129,18 +159,19 @@ class MainNavigation extends HTMLElement {
       }
 
       .nav-item {
-        width: 36px;
-        height: 36px;
+        width: 100%;
+        min-height: 36px;
         border-radius: 6px;
         display: flex;
         align-items: center;
-        justify-content: center;
+        gap: 9px;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: background 0.2s ease;
         background: transparent;
         border: none;
         padding: 6px;
         flex-shrink: 0;
+        overflow: hidden;
       }
 
       .nav-item:hover {
@@ -164,6 +195,7 @@ class MainNavigation extends HTMLElement {
         align-items: center;
         justify-content: center;
         position: relative;
+        flex-shrink: 0;
       }
 
       .nav-item:hover .nav-icon {
@@ -174,6 +206,32 @@ class MainNavigation extends HTMLElement {
         color: #F9F9FA;
       }
 
+      .nav-label {
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        font-size: 10px;
+        line-height: 12px;
+        letter-spacing: 0.01px;
+        text-transform: uppercase;
+        color: #9D9DA0;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.3s ease 0.1s;
+      }
+
+      .nav-container:hover .nav-label {
+        opacity: 1;
+      }
+
+      .nav-item:hover .nav-label {
+        color: #F9F9FA;
+      }
+
+      .nav-item.active .nav-label {
+        color: #F9F9FA;
+        opacity: 1;
+      }
+
       /* Plus Button */
       .nav-add-button {
         width: 100%;
@@ -182,12 +240,14 @@ class MainNavigation extends HTMLElement {
         display: flex;
         align-items: center;
         justify-content: center;
+        gap: 6px;
         cursor: pointer;
         background: #0F62FE;
         border: none;
-        padding: 3px;
+        padding: 3px 6px;
         flex-shrink: 0;
         transition: background 0.2s ease;
+        overflow: hidden;
       }
 
       .nav-add-button:hover {
@@ -196,6 +256,19 @@ class MainNavigation extends HTMLElement {
 
       .nav-add-button .nav-icon {
         color: #F9F9FA;
+        width: 18px;
+        height: 18px;
+      }
+
+      .nav-add-button .nav-label {
+        color: #F9F9FA;
+        opacity: 0;
+        transition: opacity 0.3s ease 0.1s;
+        text-align: center;
+      }
+
+      .nav-container:hover .nav-add-button .nav-label {
+        opacity: 1;
       }
 
       /* Bottom Section */
@@ -215,16 +288,17 @@ class MainNavigation extends HTMLElement {
       }
 
       .nav-avatar-wrapper {
-        width: 36px;
+        width: 100%;
         height: 36px;
         border-radius: 6px;
         display: flex;
         align-items: center;
-        justify-content: center;
+        gap: 9px;
         cursor: pointer;
         background: transparent;
         padding: 6px;
         transition: background 0.2s ease;
+        overflow: hidden;
       }
 
       .nav-avatar-wrapper:hover {
@@ -237,6 +311,7 @@ class MainNavigation extends HTMLElement {
         border-radius: 999px;
         overflow: hidden;
         position: relative;
+        flex-shrink: 0;
       }
 
       .nav-avatar img {
@@ -263,6 +338,28 @@ class MainNavigation extends HTMLElement {
         line-height: 12px;
       }
 
+      .nav-user-name {
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        font-size: 10px;
+        line-height: 12px;
+        letter-spacing: 0.01px;
+        text-transform: uppercase;
+        color: #9D9DA0;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.3s ease 0.1s;
+        flex: 1;
+      }
+
+      .nav-container:hover .nav-user-name {
+        opacity: 1;
+      }
+
+      .nav-avatar-wrapper:hover .nav-user-name {
+        color: #F9F9FA;
+      }
+
       /* SVG Icons */
       svg {
         width: 100%;
@@ -274,15 +371,18 @@ class MainNavigation extends HTMLElement {
 
   getHTML() {
     // Avatar image as data URL
-    const avatarDataUrl = 'data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABkAGQDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAABAUCAwYBAAf/xAA7EAACAQMDAgQDBgQFBAMAAAABAgMABBEFEiExQQYTUWEicYEUMpGhscEHI0LRUmLh8PEVcoKSM0Oy/8QAGAEAAwEBAAAAAAAAAAAAAAAAAAECAwT/xAAhEQACAgICAgMBAAAAAAAAAAAAAQIRAyESMUFRBBMiYf/aAAwDAQACEQMRAD8A+P0UUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhH/9k=';
+    const avatarDataUrl = 'data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABkAGQDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAABAUCAwYBAAf/xAA7EAACAQMDAgQDBgQFBAMAAAABAgMABBEFEiExQQYTUWEicYEUMpGhscEHI0LRUmLh8PEVcoKSM0Oy/8QAGAEAAwEBAAAAAAAAAAAAAAAAAAECAwT/xAAhEQACAgICAgMBAAAAAAAAAAAAAQIRAyESMUFRBBMiYf/aAAwDAQACEQMRAD8A+P0UUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhH/9k=';
     
     return `
       <nav class="nav-container">
         <!-- Logo -->
         <div class="nav-logo" data-item="logo" title="Emplifi">
-          <svg viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.5 0C5.6 0 0 5.6 0 12.5S5.6 25 12.5 25 25 19.4 25 12.5 19.4 0 12.5 0z" fill="#000066"/>
-          </svg>
+          <div class="nav-logo-icon">
+            <svg viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5 0C5.6 0 0 5.6 0 12.5S5.6 25 12.5 25 25 19.4 25 12.5 19.4 0 12.5 0z" fill="#000066"/>
+            </svg>
+          </div>
+          <span class="nav-logo-text">emplifi</span>
         </div>
 
         <!-- Divider -->
@@ -300,6 +400,7 @@ class MainNavigation extends HTMLElement {
                   <path d="M12.799 12.0015V6.18331H11.495L10.0604 7.07535V8.29126L11.3615 7.49581H11.3956V12.0015H12.799Z" fill="#111114"/>
                 </svg>
               </div>
+              <span class="nav-label">Command Center</span>
             </button>
 
             <!-- Dashboard -->
@@ -311,6 +412,7 @@ class MainNavigation extends HTMLElement {
                   <rect x="11" y="8.5" width="7" height="9.5" rx="1" fill="currentColor"/>
                 </svg>
               </div>
+              <span class="nav-label">Dashboard</span>
             </button>
 
             <!-- Analytics -->
@@ -325,6 +427,7 @@ class MainNavigation extends HTMLElement {
                   <circle cx="16" cy="6" r="1.5" fill="currentColor"/>
                 </svg>
               </div>
+              <span class="nav-label">Unified Analytics</span>
             </button>
 
             <!-- Publisher -->
@@ -337,6 +440,7 @@ class MainNavigation extends HTMLElement {
                   <path d="M4 12H16" stroke="currentColor" stroke-width="1.5"/>
                 </svg>
               </div>
+              <span class="nav-label">Publisher</span>
             </button>
 
             <!-- Community -->
@@ -351,6 +455,7 @@ class MainNavigation extends HTMLElement {
                   <path d="M16 15C16.5 14 17 13 17 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
               </div>
+              <span class="nav-label">Community</span>
             </button>
 
             <!-- Care -->
@@ -360,6 +465,7 @@ class MainNavigation extends HTMLElement {
                   <path d="M10 17L4 11C2.5 9.5 2 8 2 6.5C2 4 4 2 6.5 2C8 2 9 2.5 10 3.5C11 2.5 12 2 13.5 2C16 2 18 4 18 6.5C18 8 17.5 9.5 16 11L10 17Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
                 </svg>
               </div>
+              <span class="nav-label">Care</span>
             </button>
 
             <!-- Content -->
@@ -372,6 +478,7 @@ class MainNavigation extends HTMLElement {
                   <path d="M5 13H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
               </div>
+              <span class="nav-label">Content</span>
             </button>
 
             <!-- UCG -->
@@ -383,6 +490,7 @@ class MainNavigation extends HTMLElement {
                   <path d="M7 17L8 14M13 17L12 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
               </div>
+              <span class="nav-label">UCG</span>
             </button>
 
             <!-- Bot -->
@@ -396,6 +504,7 @@ class MainNavigation extends HTMLElement {
                   <path d="M4 10H2M18 10H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
               </div>
+              <span class="nav-label">Bot</span>
             </button>
 
             <!-- Ratings & Reviews -->
@@ -406,6 +515,7 @@ class MainNavigation extends HTMLElement {
                   <path d="M10 7V10L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
+              <span class="nav-label">Rating & Reviews</span>
             </button>
           </div>
         </div>
@@ -413,12 +523,13 @@ class MainNavigation extends HTMLElement {
         <!-- Bottom Section -->
         <div class="nav-bottom">
           <!-- Add Button -->
-          <button class="nav-add-button" data-item="add" title="Add">
+          <button class="nav-add-button" data-item="add" title="Add Data Sources">
             <div class="nav-icon">
               <svg viewBox="0 0 20 20" fill="none">
                 <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
               </svg>
             </div>
+            <span class="nav-label">Add Data Sources</span>
           </button>
 
           <!-- Divider -->
@@ -434,6 +545,7 @@ class MainNavigation extends HTMLElement {
                   <path d="M10 14V14.01M10 11.5C10 10 12 10 12 8.5C12 7.5 11 6.5 10 6.5C9 6.5 8 7.5 8 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
               </div>
+              <span class="nav-label">Help</span>
             </button>
 
             <!-- Settings -->
@@ -443,6 +555,7 @@ class MainNavigation extends HTMLElement {
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M19.7289 12.3719L18.7875 11.5601C18.5078 11.3188 18.3001 10.8254 18.3272 10.4644L18.3291 9.53379C18.3029 9.17188 18.5096 8.67937 18.7894 8.4381L19.7289 7.62812C20.0086 7.38685 20.0844 6.93243 19.8973 6.61859L17.9698 3.38322C17.7826 3.06939 17.3391 2.90522 16.9835 3.0195L15.7896 3.40317C15.435 3.51746 14.8904 3.4449 14.5797 3.24172L13.7479 2.78005C13.412 2.62132 13.0751 2.20045 12.9994 1.84581L12.7449 0.645805C12.67 0.291156 12.3023 0 11.928 0H8.07388C7.6996 0 7.33188 0.291156 7.25609 0.645805L7.00064 1.84127C6.92485 2.19683 6.588 2.61678 6.25209 2.77642L5.42213 3.24082C5.11148 3.44399 4.56784 3.51565 4.21228 3.40136L3.01647 3.01769C2.66091 2.9034 2.21739 3.06757 2.03025 3.38141L0.103661 6.61678C-0.0834769 6.93061 -0.00768595 7.38503 0.27115 7.6263L1.21246 8.4381C1.49223 8.67937 1.69902 9.17279 1.67282 9.53469L1.67001 10.4644C1.69621 10.8263 1.48848 11.3197 1.20965 11.561L0.27115 12.3719C-0.00862164 12.6132 -0.0844126 13.0676 0.102726 13.3814L2.03025 16.6168C2.21739 16.9306 2.66091 17.0939 3.01553 16.9805L4.20854 16.5977C4.56317 16.4834 5.10774 16.556 5.41839 16.7592L6.25022 17.2209C6.58707 17.3796 6.92392 17.8005 6.99971 18.156L7.25515 19.3542C7.33094 19.7088 7.69867 20 8.07294 20H11.9271C12.3013 20 12.6691 19.7098 12.7449 19.3542L13.0003 18.1587C13.0761 17.8032 13.4129 17.3832 13.7488 17.2236L14.5788 16.7592C14.8895 16.5569 15.4331 16.4844 15.7887 16.5986L16.9845 16.9823C17.34 17.0957 17.7835 16.9324 17.9698 16.6186L19.8973 13.3832C20.0844 13.0676 20.0086 12.6132 19.7289 12.3719ZM10.0005 15.61C6.80415 15.61 4.21322 13.0975 4.21322 9.99909C4.21322 6.90068 6.80415 4.38821 10.0005 4.38821C13.1968 4.38821 15.7877 6.89977 15.7877 9.99909C15.7877 13.0984 13.1968 15.61 10.0005 15.61Z" fill="currentColor"/>
                 </svg>
               </div>
+              <span class="nav-label">Settings</span>
             </button>
 
             <!-- Avatar with Badge -->
@@ -451,6 +564,7 @@ class MainNavigation extends HTMLElement {
                 <img src="${avatarDataUrl}" alt="User avatar">
                 <span class="nav-badge">12</span>
               </div>
+              <span class="nav-user-name">Kristin Watson</span>
             </div>
           </div>
         </div>

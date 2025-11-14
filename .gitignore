@@ -35,6 +35,7 @@ coverage/
 
 # Temporary assets from Figma
 temp-assets/
+figma-assets/
 
 # Test files
 navigation-test.html
