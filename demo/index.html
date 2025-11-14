@@ -1,1082 +1,429 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soul Components - Documentation</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #1c2128;
-            --border-color: #30363d;
-            --text-primary: #e6edf3;
-            --text-secondary: #8b949e;
-            --text-muted: #6e7681;
-            --accent-primary: #58a6ff;
-            --accent-hover: #79c0ff;
-            --success: #3fb950;
-            --code-bg: #161b22;
-            --sidebar-width: 280px;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Layout */
-        .app-container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border-color);
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 100;
-        }
-
-        .sidebar-header {
-            padding: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            font-size: 20px;
-        }
-
-        .version {
-            display: inline-block;
-            margin-top: 6px;
-            padding: 3px 6px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .sidebar-nav {
-            padding: 16px 0;
-        }
-
-        .nav-section {
-            margin-bottom: 20px;
-        }
-
-        .nav-section-title {
-            padding: 0 16px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 16px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.2s;
-            border-left: 2px solid transparent;
-            cursor: pointer;
-            font-size: 13px;
-        }
-
-        .nav-item:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-
-        .nav-item.active {
-            background: var(--bg-tertiary);
-            border-left-color: var(--accent-primary);
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .nav-item-icon {
-            font-size: 18px;
-            width: 20px;
-            text-align: center;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            flex: 1;
-            padding: 0;
-        }
-
-        .content-header {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-            padding: 16px 32px;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            backdrop-filter: blur(10px);
-            max-height: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .content-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 2px;
-            color: var(--text-primary);
-            line-height: 1.2;
-        }
-
-        .content-subtitle {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.4;
-        }
-
-        .content-body {
-            padding: 24px 32px;
-            width: 100%;
-        }
-
-        /* Section */
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        .section-heading {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        /* Installation Cards */
-        .install-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-
-        .install-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            transition: border-color 0.2s;
-        }
-
-        .install-card:hover {
-            border-color: var(--accent-primary);
-        }
-
-        .install-card h3 {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-primary);
-        }
-
-        .install-card p {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-        }
-
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 12px;
-            margin-bottom: 32px;
-        }
-
-        .feature-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 16px;
-            display: flex;
-            gap: 12px;
-        }
-
-        .feature-icon {
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        .feature-content h4 {
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 3px;
-            color: var(--text-primary);
-        }
-
-        .feature-content p {
-            font-size: 12px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        /* Component Demo */
-        .demo-container {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 32px;
-            margin: 24px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 520px;
-        }
-
-        /* Code Block */
-        .code-block {
-            margin: 16px 0;
-        }
-
-        .code-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-secondary);
-            padding: 8px 16px;
-            border: 1px solid var(--border-color);
-            border-bottom: none;
-            border-radius: 8px 8px 0 0;
-        }
-
-        .code-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .copy-btn {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .copy-btn:hover {
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            border-color: var(--accent-primary);
-        }
-
-        .copy-btn.copied {
-            background: var(--success);
-            color: white;
-            border-color: var(--success);
-        }
-
-        pre {
-            background: var(--code-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 0 0 8px 8px;
-            padding: 16px;
-            overflow-x: auto;
-            margin: 0;
-        }
-
-        code {
-            font-family: 'JetBrains Mono', 'Menlo', 'Monaco', monospace;
-            font-size: 12px;
-            line-height: 1.6;
-            color: var(--text-primary);
-        }
-
-        /* Syntax Highlighting */
-        .keyword { color: #ff7b72; }
-        .string { color: #a5d6ff; }
-        .comment { color: var(--text-muted); font-style: italic; }
-        .function { color: #d2a8ff; }
-
-        /* API Table */
-        .api-section {
-            margin: 24px 0;
-        }
-
-        .api-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .api-table th {
-            background: var(--bg-tertiary);
-            padding: 10px 14px;
-            text-align: left;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .api-table td {
-            padding: 10px 14px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 13px;
-        }
-
-        .api-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .api-table code {
-            background: var(--bg-tertiary);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 11px;
-            color: var(--accent-primary);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 32px 20px;
-            color: var(--text-muted);
-            font-size: 13px;
-            border-top: 1px solid var(--border-color);
-            margin-top: 48px;
-        }
-
-        footer a {
-            color: var(--accent-primary);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        footer a:hover {
-            color: var(--accent-hover);
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s;
-            }
-
-            .sidebar.mobile-open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .content-header {
-                padding: 12px 16px;
-            }
-
-            .content-body {
-                padding: 16px;
-            }
-
-            .content-title {
-                font-size: 20px;
-            }
-
-            .content-subtitle {
-                font-size: 12px;
-            }
-
-            .install-grid,
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .demo-container {
-                padding: 20px;
-            }
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soul Cursor Components - Component Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #1c2128;
+      --border-color: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --accent-blue: #58a6ff;
+      --accent-blue-hover: #79c0ff;
+      --accent-green: #3fb950;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-section h3 {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .nav-links a.active {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 240px;
+      flex: 1;
+      padding: 40px;
+      max-width: 1200px;
+    }
+
+    .hero {
+      margin-bottom: 48px;
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-blue-hover);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+
+    /* Section Styles */
+    section {
+      margin-bottom: 48px;
+    }
+
+    section h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+    }
+
+    section h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 24px 0 12px 0;
+      color: var(--text-primary);
+    }
+
+    section p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    /* Component Cards */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .component-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .component-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1);
+    }
+
+    .component-card-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .component-card h3 {
+      margin: 0;
+      font-size: 20px;
+      color: var(--text-primary);
+    }
+
+    .component-card p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .component-card-arrow {
+      color: var(--accent-blue);
+      font-size: 20px;
+      margin-left: auto;
+    }
+
+    /* Code Block */
+    pre {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: var(--text-primary);
+    }
+
+    /* Features */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin: 32px 0;
+    }
+
+    .feature {
+      padding: 24px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+    }
+
+    .feature h3 {
+      margin: 12px 0 8px 0;
+      font-size: 18px;
+    }
+
+    .feature p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+  </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <a href="#" class="logo">
-                    <span class="logo-icon">🎨</span>
-                    <span>Soul Components</span>
-                </a>
-                <div class="version">v1.0.0</div>
-            </div>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <a href="index.html" class="logo">Soul Cursor Components</a>
+    
+    <div class="nav-section">
+      <h3>Getting Started</h3>
+      <div class="nav-links">
+        <a href="#installation" class="active">Installation</a>
+        <a href="#usage">Usage</a>
+      </div>
+    </div>
 
-            <nav class="sidebar-nav">
-                <div class="nav-section">
-                    <div class="nav-section-title">Getting Started</div>
-                    <div class="nav-item active" data-section="getting-started">
-                        <span class="nav-item-icon">📦</span>
-                        <span>Installation</span>
-                    </div>
-                </div>
+    <div class="nav-section">
+      <h3>Components</h3>
+      <div class="nav-links">
+        <a href="trending-widget.html">🔥 Trending Widget</a>
+        <a href="main-navigation.html">🧭 Main Navigation</a>
+      </div>
+    </div>
+  </nav>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Components</div>
-                    <div class="nav-item" data-section="main-navigation">
-                        <span class="nav-item-icon">🧭</span>
-                        <span>Main Navigation</span>
-                    </div>
-                    <div class="nav-item" data-section="trending-widget">
-                        <span class="nav-item-icon">📊</span>
-                        <span>Trending Widget</span>
-                    </div>
-                    <div class="nav-item" data-section="coming-soon" style="opacity: 0.5; cursor: not-allowed;">
-                        <span class="nav-item-icon">🔔</span>
-                        <span>Notifications</span>
-                    </div>
-                    <div class="nav-item" data-section="coming-soon" style="opacity: 0.5; cursor: not-allowed;">
-                        <span class="nav-item-icon">📈</span>
-                        <span>Analytics Chart</span>
-                    </div>
-                    <div class="nav-item" data-section="coming-soon" style="opacity: 0.5; cursor: not-allowed;">
-                        <span class="nav-item-icon">🎯</span>
-                        <span>Data Table</span>
-                    </div>
-                </div>
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="hero">
+      <h1>Soul Cursor Components</h1>
+      <p>A modern, lightweight component library built with Web Components. Framework-agnostic, easy to use, and beautifully designed.</p>
+      <div class="hero-buttons">
+        <a href="#installation" class="btn btn-primary">Get Started</a>
+        <a href="https://github.com/jan-cermak-1/soul-cursor-components" target="_blank" class="btn btn-secondary">View on GitHub</a>
+      </div>
+    </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Resources</div>
-                    <a class="nav-item" href="https://github.com/jan-cermak-1/soul-cursor-components" target="_blank">
-                        <span class="nav-item-icon">💻</span>
-                        <span>GitHub</span>
-                    </a>
-                </div>
-            </nav>
-        </aside>
+    <section id="features">
+      <h2>✨ Features</h2>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">🚀</div>
+          <h3>Framework Agnostic</h3>
+          <p>Works with React, Vue, Angular, or plain HTML</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎨</div>
+          <h3>Modern Design</h3>
+          <p>Beautiful, professional UI components based on Figma designs</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <h3>Lightweight</h3>
+          <p>Built with vanilla JavaScript, no heavy dependencies</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔧</div>
+          <h3>Easy to Use</h3>
+          <p>Simple API, comprehensive documentation, and examples</p>
+        </div>
+      </div>
+    </section>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Getting Started Section -->
-            <section class="section active" id="getting-started">
-                <div class="content-header">
-                    <h1 class="content-title">Getting Started</h1>
-                    <p class="content-subtitle">Modern, framework-agnostic Web Components for your projects</p>
-                </div>
+    <section id="components">
+      <h2>📦 Components</h2>
+      <p>Explore our growing collection of reusable UI components.</p>
+      
+      <div class="component-grid">
+        <a href="trending-widget.html" class="component-card">
+          <div class="component-card-icon">🔥</div>
+          <h3>Trending Widget</h3>
+          <p>Display trending topics from X (Twitter) with country selection and real-time data</p>
+          <span class="component-card-arrow">→</span>
+        </a>
 
-                <div class="content-body">
-                    <div class="section-heading">📦 Installation</div>
-                    
-                    <div class="install-grid">
-                        <div class="install-card">
-                            <h3>NPM Package</h3>
-                            <p>Install via NPM and import in your project</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-label">Terminal</span>
-                                    <button class="copy-btn" onclick="copyCode(this, 'npm-install')">Copy</button>
-                                </div>
-                                <pre id="npm-install"><code>npm install @soul/components</code></pre>
-                            </div>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-label">JavaScript</span>
-                                    <button class="copy-btn" onclick="copyCode(this, 'npm-import')">Copy</button>
-                                </div>
-                                <pre id="npm-import"><code>import '@soul/components';</code></pre>
-                            </div>
-                        </div>
+        <a href="main-navigation.html" class="component-card">
+          <div class="component-card-icon">🧭</div>
+          <h3>Main Navigation</h3>
+          <p>Vertical navigation sidebar with icons, states, and user profile</p>
+          <span class="component-card-arrow">→</span>
+        </a>
+      </div>
+    </section>
 
-                        <div class="install-card">
-                            <h3>CDN (unpkg)</h3>
-                            <p>Quick start with CDN link</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-label">HTML</span>
-                                    <button class="copy-btn" onclick="copyCode(this, 'cdn-link')">Copy</button>
-                                </div>
-                                <pre id="cdn-link"><code>&lt;script type="module" src="https://unpkg.com/@soul/components"&gt;&lt;/script&gt;</code></pre>
-                            </div>
-                        </div>
+    <section id="installation">
+      <h2>📥 Installation</h2>
+      <p>Install the component library via npm:</p>
+      <pre><code>npm install @soul/cursor-components</code></pre>
+      
+      <h3>Or use via CDN</h3>
+      <pre><code>&lt;script type="module" src="https://unpkg.com/@soul/cursor-components"&gt;&lt;/script&gt;</code></pre>
+    </section>
 
-                        <div class="install-card">
-                            <h3>GitHub</h3>
-                            <p>Clone or download from GitHub</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-label">Terminal</span>
-                                    <button class="copy-btn" onclick="copyCode(this, 'git-clone')">Copy</button>
-                                </div>
-                                <pre id="git-clone"><code>git clone https://github.com/jan-cermak-1/soul-cursor-components.git</code></pre>
-                            </div>
-                        </div>
-                    </div>
+    <section id="usage">
+      <h2>🚀 Quick Start</h2>
+      
+      <h3>HTML</h3>
+      <p>Simply import the library and use the components as custom HTML elements:</p>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;script type="module" src="path/to/soul-cursor-components.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;trending-widget&gt;&lt;/trending-widget&gt;
+  &lt;main-navigation active="dashboard"&gt;&lt;/main-navigation&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
 
-                    <div class="section-heading">✨ Features</div>
-                    
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">🚀</div>
-                            <div class="feature-content">
-                                <h4>Framework Agnostic</h4>
-                                <p>Works with React, Vue, Angular, or vanilla JS</p>
-                            </div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🎨</div>
-                            <div class="feature-content">
-                                <h4>Shadow DOM</h4>
-                                <p>Fully encapsulated styles, no conflicts</p>
-                            </div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">⚡</div>
-                            <div class="feature-content">
-                                <h4>Zero Dependencies</h4>
-                                <p>Pure Web Components, no framework needed</p>
-                            </div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">📱</div>
-                            <div class="feature-content">
-                                <h4>Responsive</h4>
-                                <p>Works perfectly on all devices</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Main Navigation Section -->
-            <section class="section" id="main-navigation">
-                <div class="content-header">
-                    <h1 class="content-title">Main Navigation</h1>
-                    <p class="content-subtitle">Vertical sidebar navigation with icons, perfect for app navigation</p>
-                </div>
-
-                <div class="content-body">
-                    <div class="section-heading">Demo</div>
-                    
-                    <div class="demo-container" style="justify-content: flex-start; min-height: 600px; background: #0d1117;">
-                        <main-navigation active="dashboard"></main-navigation>
-                        <div style="margin-left: 80px; padding: 32px; color: #e6edf3;">
-                            <h2 style="font-size: 24px; margin-bottom: 12px;">Navigation Demo</h2>
-                            <p style="color: #8b949e;">Click on navigation items to see the active state change.</p>
-                            <div id="nav-log" style="margin-top: 24px; padding: 16px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; font-family: monospace; font-size: 12px;"></div>
-                        </div>
-                    </div>
-
-                    <div class="section-heading">Usage</div>
-
-                    <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-label">HTML</span>
-                            <button class="copy-btn" onclick="copyCode(this, 'nav-html-usage')">Copy</button>
-                        </div>
-                        <pre id="nav-html-usage"><code>&lt;!-- Simple usage --&gt;
-&lt;main-navigation active="dashboard"&gt;&lt;/main-navigation&gt;
-
-&lt;!-- With JavaScript --&gt;
-&lt;main-navigation id="myNav"&gt;&lt;/main-navigation&gt;
-
-&lt;script&gt;
-  const nav = document.getElementById('myNav');
-  
-  // Set active item
-  nav.setActive('home');
-  
-  // Get active item
-  console.log(nav.getActive());
-  
-  // Listen to navigation changes
-  nav.addEventListener('nav-change', (e) =&gt; {
-    console.log('Navigation changed to:', e.detail.item);
-  });
-  
-  // Listen to avatar clicks
-  nav.addEventListener('avatar-click', () =&gt; {
-    console.log('Avatar clicked');
-  });
-&lt;/script&gt;</code></pre>
-                    </div>
-
-                    <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-label">React</span>
-                            <button class="copy-btn" onclick="copyCode(this, 'nav-react-usage')">Copy</button>
-                        </div>
-                        <pre id="nav-react-usage"><code>import '@soul/components';
-import { useRef, useEffect, useState } from 'react';
+      <h3>React</h3>
+      <pre><code>import '@soul/cursor-components';
 
 function App() {
-  const navRef = useRef(null);
-  const [activeItem, setActiveItem] = useState('dashboard');
-  
-  useEffect(() => {
-    const nav = navRef.current;
-    
-    const handleNavChange = (e) =&gt; {
-      setActiveItem(e.detail.item);
-    };
-    
-    const handleAvatarClick = () =&gt; {
-      console.log('Avatar clicked');
-    };
-    
-    nav.addEventListener('nav-change', handleNavChange);
-    nav.addEventListener('avatar-click', handleAvatarClick);
-    
-    return () =&gt; {
-      nav.removeEventListener('nav-change', handleNavChange);
-      nav.removeEventListener('avatar-click', handleAvatarClick);
-    };
-  }, []);
-  
   return (
     &lt;div&gt;
-      &lt;main-navigation ref={navRef} active={activeItem} /&gt;
-      &lt;div style={{ marginLeft: '56px' }}&gt;
-        &lt;h1&gt;Current page: {activeItem}&lt;/h1&gt;
-      &lt;/div&gt;
+      &lt;trending-widget /&gt;
+      &lt;main-navigation active="dashboard" /&gt;
     &lt;/div&gt;
   );
 }</code></pre>
-                    </div>
 
-                    <div class="section-heading">API Reference</div>
-
-                    <div class="api-section">
-                        <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Attributes</h3>
-                        <table class="api-table">
-                            <thead>
-                                <tr>
-                                    <th>Attribute</th>
-                                    <th>Type</th>
-                                    <th>Default</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><code>active</code></td>
-                                    <td><code>string</code></td>
-                                    <td><code>null</code></td>
-                                    <td>ID of the currently active navigation item</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="api-section">
-                        <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Methods</h3>
-                        <table class="api-table">
-                            <thead>
-                                <tr>
-                                    <th>Method</th>
-                                    <th>Parameters</th>
-                                    <th>Returns</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><code>setActive()</code></td>
-                                    <td><code>itemId: string</code></td>
-                                    <td><code>void</code></td>
-                                    <td>Set the active navigation item</td>
-                                </tr>
-                                <tr>
-                                    <td><code>getActive()</code></td>
-                                    <td>-</td>
-                                    <td><code>string</code></td>
-                                    <td>Get the currently active item ID</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="api-section">
-                        <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Events</h3>
-                        <table class="api-table">
-                            <thead>
-                                <tr>
-                                    <th>Event</th>
-                                    <th>Detail</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><code>nav-change</code></td>
-                                    <td><code>{ item: string }</code></td>
-                                    <td>Fired when navigation item is clicked</td>
-                                </tr>
-                                <tr>
-                                    <td><code>avatar-click</code></td>
-                                    <td><code>{}</code></td>
-                                    <td>Fired when user avatar is clicked</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="api-section">
-                        <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Available Items</h3>
-                        <table class="api-table">
-                            <thead>
-                                <tr>
-                                    <th>Item ID</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><code>dashboard</code></td><td>Main dashboard icon</td></tr>
-                                <tr><td><code>home</code></td><td>Home icon</td></tr>
-                                <tr><td><code>grid</code></td><td>Grid/Dashboard icon</td></tr>
-                                <tr><td><code>analytics</code></td><td>Analytics/Chart icon</td></tr>
-                                <tr><td><code>schedule</code></td><td>Timer/Schedule icon</td></tr>
-                                <tr><td><code>network</code></td><td>Network/Connections icon</td></tr>
-                                <tr><td><code>notifications</code></td><td>Bell/Notifications icon</td></tr>
-                                <tr><td><code>calendar</code></td><td>Calendar/Events icon</td></tr>
-                                <tr><td><code>share</code></td><td>Share/Social icon</td></tr>
-                                <tr><td><code>ai</code></td><td>Robot/AI icon</td></tr>
-                                <tr><td><code>favorites</code></td><td>Star/Favorites icon</td></tr>
-                                <tr><td><code>add</code></td><td>Plus button</td></tr>
-                                <tr><td><code>view</code></td><td>Eye/View icon</td></tr>
-                                <tr><td><code>help</code></td><td>Question/Help icon</td></tr>
-                                <tr><td><code>settings</code></td><td>Settings icon</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <footer>
-                        Built with ❤️ by Soul Team | 
-                        <a href="https://github.com/jan-cermak-1/soul-cursor-components" target="_blank">View on GitHub</a>
-                    </footer>
-                </div>
-            </section>
-
-            <!-- Trending Widget Section -->
-            <section class="section" id="trending-widget">
-                <div class="content-header">
-                    <h1 class="content-title">Trending Widget</h1>
-                    <p class="content-subtitle">Display trending topics from social media platform X for any country with dropdown selection</p>
-                </div>
-
-                <div class="content-body">
-                    <div class="section-heading">Demo</div>
-                    
-                    <div class="demo-container">
-                        <trending-widget country="DE"></trending-widget>
-                    </div>
-
-                    <div class="section-heading">Usage</div>
-
-                    <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-label">HTML</span>
-                            <button class="copy-btn" onclick="copyCode(this, 'html-usage')">Copy</button>
-                        </div>
-                        <pre id="html-usage"><code>&lt;!-- Simple usage --&gt;
-&lt;trending-widget country="DE"&gt;&lt;/trending-widget&gt;
-
-&lt;!-- With JavaScript --&gt;
-&lt;trending-widget id="myWidget"&gt;&lt;/trending-widget&gt;
-
-&lt;script&gt;
-  const widget = document.getElementById('myWidget');
-  
-  // Set country
-  widget.setCountry('US');
-  
-  // Get current country
-  console.log(widget.getCountry());
-  
-  // Listen to country changes
-  widget.addEventListener('country-change', (e) =&gt; {
-    console.log('Country changed to:', e.detail.country);
-  });
-&lt;/script&gt;</code></pre>
-                    </div>
-
-                    <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-label">React</span>
-                            <button class="copy-btn" onclick="copyCode(this, 'react-usage')">Copy</button>
-                        </div>
-                        <pre id="react-usage"><code>import '@soul/components';
-import { useRef, useEffect } from 'react';
-
-function App() {
-  const widgetRef = useRef(null);
-  
-  useEffect(() => {
-    const widget = widgetRef.current;
-    
-    const handleCountryChange = (e) =&gt; {
-      console.log('Country:', e.detail.country);
-    };
-    
-    widget.addEventListener('country-change', handleCountryChange);
-    
-    return () =&gt; {
-      widget.removeEventListener('country-change', handleCountryChange);
-    };
-  }, []);
-  
-  return &lt;trending-widget ref={widgetRef} country="CZ" /&gt;;
-}</code></pre>
-                    </div>
-
-                    <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-label">Vue</span>
-                            <button class="copy-btn" onclick="copyCode(this, 'vue-usage')">Copy</button>
-                        </div>
-                        <pre id="vue-usage"><code>&lt;template&gt;
-  &lt;trending-widget 
-    :country="selectedCountry" 
-    @country-change="handleCountryChange"
-  /&gt;
+      <h3>Vue</h3>
+      <pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;trending-widget&gt;&lt;/trending-widget&gt;
+    &lt;main-navigation active="dashboard"&gt;&lt;/main-navigation&gt;
+  &lt;/div&gt;
 &lt;/template&gt;
 
 &lt;script&gt;
-import '@soul/components';
+import '@soul/cursor-components';
 
 export default {
-  data() {
-    return {
-      selectedCountry: 'DE'
-    };
-  },
-  methods: {
-    handleCountryChange(event) {
-      this.selectedCountry = event.detail.country;
-    }
-  }
-};
+  name: 'App'
+}
 &lt;/script&gt;</code></pre>
-                    </div>
+    </section>
 
-                    <div class="section-heading">API Reference</div>
+    <section id="contributing">
+      <h2>🤝 Contributing</h2>
+      <p>We welcome contributions! Check out our <a href="https://github.com/jan-cermak-1/soul-cursor-components" style="color: var(--accent-blue);" target="_blank">GitHub repository</a> to get started.</p>
+    </section>
 
-                    <div class="api-section">
-                        <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Attributes</h3>
-                        <table class="api-table">
-                            <thead>
-                                <tr>
-                                    <th>Attribute</th>
-                                    <th>Type</th>
-                                    <th>Default</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><code>country</code></td>
-                                    <td><code>string</code></td>
-                                    <td><code>'DE'</code></td>
-                                    <td>ISO 3166-1 alpha-2 country code</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="api-section">
-                        <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Methods</h3>
-                        <table class="api-table">
-                            <thead>
-                                <tr>
-                                    <th>Method</th>
-                                    <th>Parameters</th>
-                                    <th>Returns</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><code>setCountry()</code></td>
-                                    <td><code>countryCode: string</code></td>
-                                    <td><code>void</code></td>
-                                    <td>Set the current country</td>
-                                </tr>
-                                <tr>
-                                    <td><code>getCountry()</code></td>
-                                    <td>-</td>
-                                    <td><code>string</code></td>
-                                    <td>Get the current country code</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="api-section">
-                        <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Events</h3>
-                        <table class="api-table">
-                            <thead>
-                                <tr>
-                                    <th>Event</th>
-                                    <th>Detail</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><code>country-change</code></td>
-                                    <td><code>{ country: string }</code></td>
-                                    <td>Fired when country selection changes</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <footer>
-                        Built with ❤️ by Soul Team | 
-                        <a href="https://github.com/jan-cermak-1/soul-cursor-components" target="_blank">View on GitHub</a>
-                    </footer>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <script type="module" src="../src/index.js"></script>
-    <script>
-        // Navigation
-        document.querySelectorAll('.nav-item[data-section]').forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const sectionId = item.dataset.section;
-                
-                if (sectionId === 'coming-soon') return;
-
-                // Update active nav item
-                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-                item.classList.add('active');
-
-                // Show corresponding section
-                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-                document.getElementById(sectionId).classList.add('active');
-
-                // Scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-
-        // Copy code functionality
-        function copyCode(button, elementId) {
-            const code = document.getElementById(elementId).textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                button.textContent = '✓ Copied!';
-                button.classList.add('copied');
-                
-                setTimeout(() => {
-                    button.textContent = 'Copy';
-                    button.classList.remove('copied');
-                }, 2000);
-            });
-        }
-
-        // Main Navigation Demo
-        setTimeout(() => {
-            const mainNav = document.querySelector('main-navigation');
-            const navLog = document.getElementById('nav-log');
-            
-            if (mainNav && navLog) {
-                mainNav.addEventListener('nav-change', (e) => {
-                    const timestamp = new Date().toLocaleTimeString();
-                    navLog.innerHTML = `<div style="margin-bottom: 8px;">
-                        <span style="color: #58a6ff;">[${timestamp}]</span> 
-                        <span style="color: #3fb950;">nav-change</span>
-                        <span style="color: #e6edf3;">→ item: <span style="color: #79c0ff;">"${e.detail.item}"</span></span>
-                    </div>` + navLog.innerHTML;
-                });
-                
-                mainNav.addEventListener('avatar-click', () => {
-                    const timestamp = new Date().toLocaleTimeString();
-                    navLog.innerHTML = `<div style="margin-bottom: 8px;">
-                        <span style="color: #58a6ff;">[${timestamp}]</span> 
-                        <span style="color: #d2a8ff;">avatar-click</span>
-                    </div>` + navLog.innerHTML;
-                });
-            }
-        }, 100);
-
-        // Mobile menu toggle (for future implementation)
-        const sidebar = document.querySelector('.sidebar');
-        // Add mobile menu button logic here if needed
-    </script>
+    <section id="license">
+      <h2>📄 License</h2>
+      <p>MIT License - feel free to use in your projects!</p>
+    </section>
+  </main>
 </body>
 </html>

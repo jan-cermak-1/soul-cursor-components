@@ -53,15 +53,15 @@ class MainNavigation extends HTMLElement {
       }
 
       .nav-container {
-        width: 48px;
-        min-height: 600px;
+        width: 60px;
         height: 100%;
-        background: #2B2B2E;
+        background: #111114;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 8px 0;
+        padding: 12px;
         box-sizing: border-box;
+        gap: 12px;
       }
       
       :host([fixed]) .nav-container {
@@ -71,19 +71,61 @@ class MainNavigation extends HTMLElement {
         height: 100vh;
       }
 
+      .nav-logo {
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: transparent;
+        flex-shrink: 0;
+      }
+
+      .nav-logo img {
+        width: 24.889px;
+        height: 24.889px;
+      }
+
+      .nav-divider {
+        width: 100%;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.2);
+        flex-shrink: 0;
+      }
+
+      .nav-scroll-area {
+        flex: 1;
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        min-height: 0;
+      }
+
+      /* Custom scrollbar */
+      .nav-scroll-area::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .nav-scroll-area::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .nav-scroll-area::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 2px;
+      }
+
+      .nav-scroll-area::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
       .nav-items {
         display: flex;
         flex-direction: column;
-        gap: 2px;
+        gap: 6px;
         width: 100%;
-        padding: 0 6px;
-      }
-
-      .nav-separator {
-        height: 1px;
-        background: rgba(255, 255, 255, 0.1);
-        width: calc(100% - 12px);
-        margin: 6px auto;
       }
 
       .nav-item {
@@ -97,8 +139,8 @@ class MainNavigation extends HTMLElement {
         transition: all 0.2s ease;
         background: transparent;
         border: none;
-        padding: 0;
-        position: relative;
+        padding: 6px;
+        flex-shrink: 0;
       }
 
       .nav-item:hover {
@@ -121,6 +163,7 @@ class MainNavigation extends HTMLElement {
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
       }
 
       .nav-item:hover .nav-icon {
@@ -132,37 +175,68 @@ class MainNavigation extends HTMLElement {
       }
 
       /* Plus Button */
-      .nav-item.plus-button {
+      .nav-add-button {
+        width: 100%;
+        height: 36px;
+        border-radius: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
         background: #0F62FE;
-        margin-top: 6px;
+        border: none;
+        padding: 3px;
+        flex-shrink: 0;
+        transition: background 0.2s ease;
       }
 
-      .nav-item.plus-button:hover {
+      .nav-add-button:hover {
         background: #0353E9;
       }
 
-      .nav-item.plus-button .nav-icon {
+      .nav-add-button .nav-icon {
         color: #F9F9FA;
       }
 
       /* Bottom Section */
       .nav-bottom {
-        margin-top: auto;
+        width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 2px;
+        gap: 12px;
+        flex-shrink: 0;
+      }
+
+      .nav-bottom-items {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
         width: 100%;
-        padding: 0 6px;
+      }
+
+      .nav-avatar-wrapper {
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: transparent;
+        padding: 6px;
+        transition: background 0.2s ease;
+      }
+
+      .nav-avatar-wrapper:hover {
+        background: rgba(255, 255, 255, 0.05);
       }
 
       .nav-avatar {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        border-radius: 999px;
         overflow: hidden;
         position: relative;
-        cursor: pointer;
-        margin-top: 6px;
       }
 
       .nav-avatar img {
@@ -175,23 +249,18 @@ class MainNavigation extends HTMLElement {
         position: absolute;
         bottom: -2px;
         right: -2px;
-        min-width: 18px;
-        height: 18px;
-        background: #DA1E28;
-        border-radius: 9px;
-        border: 2px solid #2B2B2E;
+        min-width: 14px;
+        height: 14px;
+        background: #DA2828;
+        border-radius: 100px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 10px;
         font-weight: 700;
-        color: white;
-        padding: 0 4px;
-      }
-
-      /* Spacer */
-      .spacer {
-        flex: 1;
+        color: #F9F9FA;
+        padding: 0 2px;
+        line-height: 12px;
       }
 
       /* SVG Icons */
@@ -204,179 +273,185 @@ class MainNavigation extends HTMLElement {
   }
 
   getHTML() {
+    // Avatar image as data URL
+    const avatarDataUrl = 'data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABkAGQDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAABAUCAwYBAAf/xAA7EAACAQMDAgQDBgQFBAMAAAABAgMABBEFEiExQQYTUWEicYEUMpGhscEHI0LRUmLh8PEVcoKSM0Oy/8QAGAEAAwEBAAAAAAAAAAAAAAAAAAECAwT/xAAhEQACAgICAgMBAAAAAAAAAAAAAQIRAyESMUFRBBMiYf/aAAwDAQACEQMRAD8A+P0UUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhBRRRSEFFFFIQUUUUhH/9k=';
+    
     return `
       <nav class="nav-container">
-        <div class="nav-items">
-          <!-- Command Center / Dashboard -->
-          <button class="nav-item ${this.activeItem === 'dashboard' ? 'active' : ''}" data-item="dashboard" title="Command Center">
-            <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M7 3H5C3.89543 3 3 3.89543 3 5V7C3 8.10457 3.89543 9 5 9H7C8.10457 9 9 8.10457 9 7V5C9 3.89543 8.10457 3 7 3Z" fill="currentColor"/>
-                <path d="M7 15H5C3.89543 15 3 15.8954 3 17V19C3 20.1046 3.89543 21 5 21H7C8.10457 21 9 20.1046 9 19V17C9 15.8954 8.10457 15 7 15Z" fill="currentColor"/>
-                <path d="M15 9H19C20.1046 9 21 8.10457 21 7V5C21 3.89543 20.1046 3 19 3H15C13.8954 3 13 3.89543 13 5V7C13 8.10457 13.8954 9 15 9Z" fill="currentColor"/>
-                <path d="M19 15H15C13.8954 15 13 15.8954 13 17V19C13 20.1046 13.8954 21 15 21H19C20.1046 21 21 20.1046 21 19V17C21 15.8954 20.1046 15 19 15Z" fill="currentColor"/>
-              </svg>
-            </div>
-          </button>
-
-          <div class="nav-separator"></div>
-
-          <!-- Home -->
-          <button class="nav-item ${this.activeItem === 'home' ? 'active' : ''}" data-item="home" title="Home">
-            <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <path d="M3 10L10 3L17 10V18H13V13H7V18H3V10Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </button>
-
-          <!-- Grid / Widgets -->
-          <button class="nav-item ${this.activeItem === 'widgets' ? 'active' : ''}" data-item="widgets" title="Widgets">
-            <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
-                <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
-                <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
-                <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
-              </svg>
-            </div>
-          </button>
-
-          <!-- Analytics / Chart -->
-          <button class="nav-item ${this.activeItem === 'analytics' ? 'active' : ''}" data-item="analytics" title="Analytics">
-            <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M3 3V18C3 19.1046 3.89543 20 5 20H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M7 14L11 10L15 14L21 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </button>
-
-          <!-- Schedule / Timer -->
-          <button class="nav-item ${this.activeItem === 'schedule' ? 'active' : ''}" data-item="schedule" title="Schedule">
-            <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M12 7V12L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </button>
-
-          <!-- Network / Connections -->
-          <button class="nav-item ${this.activeItem === 'network' ? 'active' : ''}" data-item="network" title="Network">
-            <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="5" r="2" fill="currentColor"/>
-                <circle cx="5" cy="19" r="2" fill="currentColor"/>
-                <circle cx="19" cy="19" r="2" fill="currentColor"/>
-                <path d="M12 7V13M12 13L5 17M12 13L19 17" stroke="currentColor" stroke-width="1.5"/>
-              </svg>
-            </div>
-          </button>
-
-          <!-- Bell / Notifications -->
-          <button class="nav-item ${this.activeItem === 'notifications' ? 'active' : ''}" data-item="notifications" title="Notifications">
-            <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </button>
-
-          <!-- Calendar -->
-          <button class="nav-item ${this.activeItem === 'calendar' ? 'active' : ''}" data-item="calendar" title="Calendar">
-            <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="6" width="18" height="15" rx="2" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M3 10H21" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M8 3V7M16 3V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </button>
-
-          <!-- Share / Social -->
-          <button class="nav-item ${this.activeItem === 'share' ? 'active' : ''}" data-item="share" title="Share">
-            <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <circle cx="18" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/>
-                <circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/>
-                <circle cx="18" cy="18" r="3" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M8.7 13.5L15.3 16.5M8.7 10.5L15.3 7.5" stroke="currentColor" stroke-width="1.5"/>
-              </svg>
-            </div>
-          </button>
-
-          <!-- Robot / Bot -->
-          <button class="nav-item ${this.activeItem === 'bot' ? 'active' : ''}" data-item="bot" title="Bot">
-            <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect x="7" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
-                <circle cx="10" cy="13" r="1" fill="currentColor"/>
-                <circle cx="14" cy="13" r="1" fill="currentColor"/>
-                <path d="M12 5V9M9 5H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M7 15H5M19 15H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </button>
-
-          <!-- Star / Favorites -->
-          <button class="nav-item ${this.activeItem === 'favorites' ? 'active' : ''}" data-item="favorites" title="Favorites">
-            <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </button>
+        <!-- Logo -->
+        <div class="nav-logo" data-item="logo" title="Emplifi">
+          <svg viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 0C5.6 0 0 5.6 0 12.5S5.6 25 12.5 25 25 19.4 25 12.5 19.4 0 12.5 0z" fill="#000066"/>
+          </svg>
         </div>
 
-        <!-- Plus Button -->
-        <button class="nav-item plus-button" data-item="add" title="Add">
-          <div class="nav-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </button>
+        <!-- Divider -->
+        <div class="nav-divider"></div>
 
-        <div class="spacer"></div>
+        <!-- Scroll Area with Navigation Items -->
+        <div class="nav-scroll-area">
+          <div class="nav-items">
+            <!-- Command Center -->
+            <button class="nav-item ${this.activeItem === 'command-center' ? 'active' : ''}" data-item="command-center" title="Command Center">
+              <div class="nav-icon">
+                <svg viewBox="0 0 18 18" fill="none">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M0 2C0 0.89543 0.895431 0 2 0H16C17.1046 0 18 0.895431 18 2V16C18 17.1046 17.1046 18 16 18H2C0.89543 18 0 17.1046 0 16V2ZM16 9.00146C16 12.8675 12.866 16.0015 9 16.0015C5.13401 16.0015 2 12.8675 2 9.00146C2 5.13547 5.13401 2.00146 9 2.00146C12.866 2.00146 16 5.13547 16 9.00146Z" fill="currentColor"/>
+                  <path d="M5.80682 11.8538C6.14963 12.0053 6.54262 12.081 6.9858 12.081C7.44035 12.081 7.84281 12.0072 8.19319 11.8594C8.54546 11.7098 8.82008 11.5053 9.01705 11.2458C9.21591 10.9844 9.31535 10.6852 9.31535 10.3481C9.31724 9.99012 9.20266 9.69183 8.9716 9.45319C8.74243 9.21456 8.40247 9.06872 7.95171 9.01569V8.97024C8.28883 8.92099 8.5644 8.79031 8.77841 8.57819C8.99432 8.36607 9.10133 8.09618 9.09944 7.76853C9.09944 7.45224 9.01137 7.1691 8.83523 6.9191C8.6591 6.66721 8.41288 6.46834 8.0966 6.32251C7.78031 6.17668 7.41383 6.10376 6.99716 6.10376C6.5786 6.10376 6.2055 6.17857 5.87785 6.32819C5.55209 6.47781 5.29451 6.6852 5.10512 6.95035C4.91572 7.21361 4.81913 7.51853 4.81535 7.86512H6.1591C6.16288 7.73255 6.20171 7.61607 6.27557 7.51569C6.34944 7.41531 6.44887 7.33766 6.57387 7.28274C6.70076 7.22781 6.84186 7.20035 6.99716 7.20035C7.14489 7.20035 7.27463 7.22781 7.38637 7.28274C7.5 7.33766 7.58807 7.41531 7.65057 7.51569C7.71497 7.61418 7.74622 7.72876 7.74432 7.85944C7.74622 7.99391 7.71023 8.11323 7.63637 8.2174C7.5625 8.31967 7.45928 8.39921 7.32671 8.45603C7.19603 8.51285 7.04451 8.54126 6.87216 8.54126H6.30682V9.54126H6.87216C7.06913 9.54126 7.23959 9.57062 7.38353 9.62933C7.52936 9.68804 7.64205 9.77043 7.7216 9.87649C7.80114 9.98255 7.83997 10.1038 7.83807 10.2401C7.83997 10.3765 7.80493 10.4977 7.73296 10.6038C7.66099 10.7079 7.56061 10.7903 7.43182 10.8509C7.30493 10.9096 7.15815 10.939 6.99148 10.939C6.82481 10.939 6.67614 10.9115 6.54546 10.8566C6.41478 10.8017 6.31156 10.7259 6.2358 10.6293C6.16004 10.5308 6.11932 10.4182 6.11364 10.2913H4.69887C4.70266 10.6416 4.80303 10.9513 5 11.2202C5.19697 11.4892 5.46591 11.7004 5.80682 11.8538Z" fill="#111114"/>
+                  <path d="M12.799 12.0015V6.18331H11.495L10.0604 7.07535V8.29126L11.3615 7.49581H11.3956V12.0015H12.799Z" fill="#111114"/>
+                </svg>
+              </div>
+            </button>
+
+            <!-- Dashboard -->
+            <button class="nav-item ${this.activeItem === 'dashboard' ? 'active' : ''}" data-item="dashboard" title="Dashboard">
+              <div class="nav-icon">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <rect x="2" y="2" width="16" height="3" rx="1" fill="currentColor"/>
+                  <rect x="2" y="8.5" width="7" height="9.5" rx="1" fill="currentColor"/>
+                  <rect x="11" y="8.5" width="7" height="9.5" rx="1" fill="currentColor"/>
+                </svg>
+              </div>
+            </button>
+
+            <!-- Analytics -->
+            <button class="nav-item ${this.activeItem === 'analytics' ? 'active' : ''}" data-item="analytics" title="Unified Analytics">
+              <div class="nav-icon">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <path d="M2 18V4C2 2.89543 2.89543 2 4 2H18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M5.5 13L8.5 10L11 12.5L16 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="5.5" cy="13" r="1.5" fill="currentColor"/>
+                  <circle cx="8.5" cy="10" r="1.5" fill="currentColor"/>
+                  <circle cx="11" cy="12.5" r="1.5" fill="currentColor"/>
+                  <circle cx="16" cy="6" r="1.5" fill="currentColor"/>
+                </svg>
+              </div>
+            </button>
+
+            <!-- Publisher -->
+            <button class="nav-item ${this.activeItem === 'publisher' ? 'active' : ''}" data-item="publisher" title="Publisher">
+              <div class="nav-icon">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <path d="M4 4H16V16H4L4 4Z" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M8 4V16" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M4 8H16" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M4 12H16" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </button>
+
+            <!-- Community -->
+            <button class="nav-item ${this.activeItem === 'community' ? 'active' : ''}" data-item="community" title="Community">
+              <div class="nav-icon">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="5" cy="11" r="2" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="15" cy="11" r="2" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M10 9C12 9 14 10.5 14 13V17H6V13C6 10.5 8 9 10 9Z" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M4 15C3.5 14 3 13 3 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M16 15C16.5 14 17 13 17 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </button>
+
+            <!-- Care -->
+            <button class="nav-item ${this.activeItem === 'care' ? 'active' : ''}" data-item="care" title="Care">
+              <div class="nav-icon">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <path d="M10 17L4 11C2.5 9.5 2 8 2 6.5C2 4 4 2 6.5 2C8 2 9 2.5 10 3.5C11 2.5 12 2 13.5 2C16 2 18 4 18 6.5C18 8 17.5 9.5 16 11L10 17Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </button>
+
+            <!-- Content -->
+            <button class="nav-item ${this.activeItem === 'content' ? 'active' : ''}" data-item="content" title="Content">
+              <div class="nav-icon">
+                <svg viewBox="0 0 18 20" fill="none">
+                  <path d="M2 2H12L16 6V18H2V2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M12 2V6H16" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M5 10H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M5 13H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </button>
+
+            <!-- UCG -->
+            <button class="nav-item ${this.activeItem === 'ucg' ? 'active' : ''}" data-item="ucg" title="UCG">
+              <div class="nav-icon">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M4 17V14C4 12 6 11 8 11H12C14 11 16 12 16 14V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M7 17L8 14M13 17L12 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </button>
+
+            <!-- Bot -->
+            <button class="nav-item ${this.activeItem === 'bot' ? 'active' : ''}" data-item="bot" title="Bot">
+              <div class="nav-icon">
+                <svg viewBox="0 0 20 18" fill="none">
+                  <rect x="4" y="4" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="7.5" cy="8.5" r="1" fill="currentColor"/>
+                  <circle cx="12.5" cy="8.5" r="1" fill="currentColor"/>
+                  <path d="M10 1V4M7 1H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M4 10H2M18 10H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </button>
+
+            <!-- Ratings & Reviews -->
+            <button class="nav-item ${this.activeItem === 'reviews' ? 'active' : ''}" data-item="reviews" title="Rating & Reviews">
+              <div class="nav-icon">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <path d="M10 2L12.39 7.09L18 7.91L14 11.79L14.82 17.36L10 14.77L5.18 17.36L6 11.79L2 7.91L7.61 7.09L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M10 7V10L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
 
         <!-- Bottom Section -->
         <div class="nav-bottom">
-          <!-- Eye / View -->
-          <button class="nav-item ${this.activeItem === 'view' ? 'active' : ''}" data-item="view" title="View">
+          <!-- Add Button -->
+          <button class="nav-add-button" data-item="add" title="Add">
             <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z" stroke="currentColor" stroke-width="1.5"/>
-                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/>
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
               </svg>
             </div>
           </button>
 
-          <!-- Help / Question -->
-          <button class="nav-item ${this.activeItem === 'help' ? 'active' : ''}" data-item="help" title="Help">
-            <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M12 17V17.01M12 14C12 12.5 14 12.5 14 10.5C14 9.5 13 8.5 12 8.5C11 8.5 10 9.5 10 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </button>
+          <!-- Divider -->
+          <div class="nav-divider"></div>
 
-          <!-- Settings -->
-          <button class="nav-item ${this.activeItem === 'settings' ? 'active' : ''}" data-item="settings" title="Settings">
-            <div class="nav-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M12 4V6M12 18V20M4 12H6M18 12H20M6.34 6.34L7.76 7.76M16.24 16.24L17.66 17.66M17.66 6.34L16.24 7.76M7.76 16.24L6.34 17.66" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </button>
+          <!-- Bottom Items -->
+          <div class="nav-bottom-items">
+            <!-- Help -->
+            <button class="nav-item ${this.activeItem === 'help' ? 'active' : ''}" data-item="help" title="Help">
+              <div class="nav-icon">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M10 14V14.01M10 11.5C10 10 12 10 12 8.5C12 7.5 11 6.5 10 6.5C9 6.5 8 7.5 8 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </button>
 
-          <!-- Avatar with Badge -->
-          <div class="nav-avatar">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Crect fill='%23FFA500' width='36' height='36' rx='18'/%3E%3Ctext x='50%25' y='50%25' dy='.1em' fill='white' font-family='Arial, sans-serif' font-size='16' font-weight='600' text-anchor='middle' dominant-baseline='middle'%3EJC%3C/text%3E%3C/svg%3E" alt="User avatar">
-            <span class="nav-badge">12</span>
+            <!-- Settings -->
+            <button class="nav-item ${this.activeItem === 'settings' ? 'active' : ''}" data-item="settings" title="Settings">
+              <div class="nav-icon">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M19.7289 12.3719L18.7875 11.5601C18.5078 11.3188 18.3001 10.8254 18.3272 10.4644L18.3291 9.53379C18.3029 9.17188 18.5096 8.67937 18.7894 8.4381L19.7289 7.62812C20.0086 7.38685 20.0844 6.93243 19.8973 6.61859L17.9698 3.38322C17.7826 3.06939 17.3391 2.90522 16.9835 3.0195L15.7896 3.40317C15.435 3.51746 14.8904 3.4449 14.5797 3.24172L13.7479 2.78005C13.412 2.62132 13.0751 2.20045 12.9994 1.84581L12.7449 0.645805C12.67 0.291156 12.3023 0 11.928 0H8.07388C7.6996 0 7.33188 0.291156 7.25609 0.645805L7.00064 1.84127C6.92485 2.19683 6.588 2.61678 6.25209 2.77642L5.42213 3.24082C5.11148 3.44399 4.56784 3.51565 4.21228 3.40136L3.01647 3.01769C2.66091 2.9034 2.21739 3.06757 2.03025 3.38141L0.103661 6.61678C-0.0834769 6.93061 -0.00768595 7.38503 0.27115 7.6263L1.21246 8.4381C1.49223 8.67937 1.69902 9.17279 1.67282 9.53469L1.67001 10.4644C1.69621 10.8263 1.48848 11.3197 1.20965 11.561L0.27115 12.3719C-0.00862164 12.6132 -0.0844126 13.0676 0.102726 13.3814L2.03025 16.6168C2.21739 16.9306 2.66091 17.0939 3.01553 16.9805L4.20854 16.5977C4.56317 16.4834 5.10774 16.556 5.41839 16.7592L6.25022 17.2209C6.58707 17.3796 6.92392 17.8005 6.99971 18.156L7.25515 19.3542C7.33094 19.7088 7.69867 20 8.07294 20H11.9271C12.3013 20 12.6691 19.7098 12.7449 19.3542L13.0003 18.1587C13.0761 17.8032 13.4129 17.3832 13.7488 17.2236L14.5788 16.7592C14.8895 16.5569 15.4331 16.4844 15.7887 16.5986L16.9845 16.9823C17.34 17.0957 17.7835 16.9324 17.9698 16.6186L19.8973 13.3832C20.0844 13.0676 20.0086 12.6132 19.7289 12.3719ZM10.0005 15.61C6.80415 15.61 4.21322 13.0975 4.21322 9.99909C4.21322 6.90068 6.80415 4.38821 10.0005 4.38821C13.1968 4.38821 15.7877 6.89977 15.7877 9.99909C15.7877 13.0984 13.1968 15.61 10.0005 15.61Z" fill="currentColor"/>
+                </svg>
+              </div>
+            </button>
+
+            <!-- Avatar with Badge -->
+            <div class="nav-avatar-wrapper" data-item="profile" title="Profile">
+              <div class="nav-avatar">
+                <img src="${avatarDataUrl}" alt="User avatar">
+                <span class="nav-badge">12</span>
+              </div>
+            </div>
           </div>
         </div>
       </nav>
@@ -384,7 +459,7 @@ class MainNavigation extends HTMLElement {
   }
 
   updateActiveState() {
-    const items = this.shadowRoot.querySelectorAll('.nav-item[data-item]');
+    const items = this.shadowRoot.querySelectorAll('[data-item]');
     items.forEach(item => {
       if (item.dataset.item === this.activeItem) {
         item.classList.add('active');
@@ -395,11 +470,21 @@ class MainNavigation extends HTMLElement {
   }
 
   attachEventListeners() {
-    const items = this.shadowRoot.querySelectorAll('.nav-item[data-item]');
+    const items = this.shadowRoot.querySelectorAll('[data-item]');
     
     items.forEach(item => {
       item.addEventListener('click', () => {
         const itemId = item.dataset.item;
+        
+        // Special handling for profile/avatar
+        if (itemId === 'profile') {
+          this.dispatchEvent(new CustomEvent('avatar-click', {
+            bubbles: true,
+            composed: true
+          }));
+          return;
+        }
+        
         this.activeItem = itemId;
         this.updateActiveState();
         
@@ -409,14 +494,6 @@ class MainNavigation extends HTMLElement {
           composed: true
         }));
       });
-    });
-
-    const avatar = this.shadowRoot.querySelector('.nav-avatar');
-    avatar?.addEventListener('click', () => {
-      this.dispatchEvent(new CustomEvent('avatar-click', {
-        bubbles: true,
-        composed: true
-      }));
     });
   }
 }

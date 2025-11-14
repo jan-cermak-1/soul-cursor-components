@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trending Widget - Soul Cursor Components</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #1c2128;
+      --border-color: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --accent-blue: #58a6ff;
+      --accent-blue-hover: #79c0ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-section h3 {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .nav-links a.active {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 240px;
+      flex: 1;
+      padding: 40px;
+      max-width: 1200px;
+    }
+
+    .content-header {
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .content-header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .content-header p {
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    /* Section Styles */
+    section {
+      margin-bottom: 48px;
+    }
+
+    section h2 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    section h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 24px 0 12px 0;
+      color: var(--text-primary);
+    }
+
+    section p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    /* Demo Container */
+    .demo-container {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 32px;
+      margin: 24px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+    }
+
+    /* Code Block */
+    pre {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: var(--text-primary);
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background: var(--bg-tertiary);
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+
+    td {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 24px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--accent-blue-hover);
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <a href="index.html" class="logo">Soul Cursor Components</a>
+    
+    <div class="nav-section">
+      <h3>Getting Started</h3>
+      <div class="nav-links">
+        <a href="index.html#installation">Installation</a>
+        <a href="index.html#usage">Usage</a>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <h3>Components</h3>
+      <div class="nav-links">
+        <a href="trending-widget.html" class="active">🔥 Trending Widget</a>
+        <a href="main-navigation.html">🧭 Main Navigation</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <a href="index.html" class="back-link">← Back to Home</a>
+
+    <div class="content-header">
+      <h1>🔥 Trending Widget</h1>
+      <p>Display trending topics from X (Twitter) with country selection and real-time data.</p>
+    </div>
+
+    <section id="demo">
+      <h2>Demo</h2>
+      <div class="demo-container">
+        <trending-widget></trending-widget>
+      </div>
+    </section>
+
+    <section id="installation">
+      <h2>Installation</h2>
+      <p>Install the component library via npm:</p>
+      <pre><code>npm install @soul/cursor-components</code></pre>
+    </section>
+
+    <section id="usage">
+      <h2>Usage</h2>
+      
+      <h3>HTML</h3>
+      <pre><code>&lt;!-- Include the component --&gt;
+&lt;script type="module" src="path/to/soul-cursor-components.js"&gt;&lt;/script&gt;
+
+&lt;!-- Use the component --&gt;
+&lt;trending-widget&gt;&lt;/trending-widget&gt;</code></pre>
+
+      <h3>React</h3>
+      <pre><code>import '@soul/cursor-components';
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;trending-widget /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+
+      <h3>Vue</h3>
+      <pre><code>&lt;template&gt;
+  &lt;trending-widget&gt;&lt;/trending-widget&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import '@soul/cursor-components';
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <section id="properties">
+      <h2>Properties</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>country</code></td>
+            <td>string</td>
+            <td>"Germany"</td>
+            <td>Initial country to display trends for</td>
+          </tr>
+          <tr>
+            <td><code>state</code></td>
+            <td>string</td>
+            <td>"full"</td>
+            <td>Widget state: "full", "loading", "empty", "shortened"</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="events">
+      <h2>Events</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Detail</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>country-change</code></td>
+            <td><code>{ country: string }</code></td>
+            <td>Fired when the user selects a different country</td>
+          </tr>
+          <tr>
+            <td><code>trend-click</code></td>
+            <td><code>{ trend: object }</code></td>
+            <td>Fired when a trend item is clicked</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Example</h3>
+      <pre><code>const widget = document.querySelector('trending-widget');
+
+widget.addEventListener('country-change', (e) => {
+  console.log('Selected country:', e.detail.country);
+});
+
+widget.addEventListener('trend-click', (e) => {
+  console.log('Clicked trend:', e.detail.trend);
+});</code></pre>
+    </section>
+
+    <section id="methods">
+      <h2>Methods</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Parameters</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>setCountry()</code></td>
+            <td>country: string</td>
+            <td>Programmatically change the selected country</td>
+          </tr>
+          <tr>
+            <td><code>getCountry()</code></td>
+            <td>-</td>
+            <td>Get the currently selected country</td>
+          </tr>
+          <tr>
+            <td><code>setState()</code></td>
+            <td>state: string</td>
+            <td>Change the widget state</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Example</h3>
+      <pre><code>const widget = document.querySelector('trending-widget');
+
+// Change country
+widget.setCountry('France');
+
+// Get current country
+const currentCountry = widget.getCountry();
+
+// Change state
+widget.setState('loading');</code></pre>
+    </section>
+  </main>
+
+  <script type="module" src="../src/index.js"></script>
+</body>
+</html>
+

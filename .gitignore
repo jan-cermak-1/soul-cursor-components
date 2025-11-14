@@ -33,3 +33,9 @@ yarn-error.log*
 coverage/
 .nyc_output/
 
+# Temporary assets from Figma
+temp-assets/
+
+# Test files
+navigation-test.html
+

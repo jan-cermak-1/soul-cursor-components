@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Navigation - Soul Cursor Components</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #1c2128;
+      --border-color: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --accent-blue: #58a6ff;
+      --accent-blue-hover: #79c0ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-section h3 {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .nav-links a.active {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 240px;
+      flex: 1;
+      padding: 40px;
+      max-width: 1200px;
+    }
+
+    .content-header {
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .content-header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .content-header p {
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    /* Section Styles */
+    section {
+      margin-bottom: 48px;
+    }
+
+    section h2 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    section h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 24px 0 12px 0;
+      color: var(--text-primary);
+    }
+
+    section p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    /* Demo Container */
+    .demo-container {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 32px;
+      margin: 24px 0;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      min-height: 600px;
+    }
+
+    /* Code Block */
+    pre {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: var(--text-primary);
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background: var(--bg-tertiary);
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+
+    td {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 24px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--accent-blue-hover);
+    }
+
+    /* Event Log */
+    .event-log {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .event-log h3 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+    }
+
+    .log-entry {
+      padding: 8px;
+      margin-bottom: 8px;
+      background: var(--bg-secondary);
+      border-left: 3px solid var(--accent-blue);
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: monospace;
+    }
+
+    .log-entry .timestamp {
+      color: var(--text-secondary);
+    }
+
+    .log-entry .event-name {
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <a href="index.html" class="logo">Soul Cursor Components</a>
+    
+    <div class="nav-section">
+      <h3>Getting Started</h3>
+      <div class="nav-links">
+        <a href="index.html#installation">Installation</a>
+        <a href="index.html#usage">Usage</a>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <h3>Components</h3>
+      <div class="nav-links">
+        <a href="trending-widget.html">🔥 Trending Widget</a>
+        <a href="main-navigation.html" class="active">🧭 Main Navigation</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <a href="index.html" class="back-link">← Back to Home</a>
+
+    <div class="content-header">
+      <h1>🧭 Main Navigation</h1>
+      <p>Vertical navigation sidebar with icons, states, and user profile.</p>
+    </div>
+
+    <section id="demo">
+      <h2>Demo</h2>
+      <div class="demo-container">
+        <main-navigation id="main-nav"></main-navigation>
+      </div>
+
+      <div class="event-log">
+        <h3>📝 Event Log</h3>
+        <div id="log-container">
+          <p style="color: var(--text-secondary); font-size: 13px;">Click on navigation items to see events...</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="installation">
+      <h2>Installation</h2>
+      <p>Install the component library via npm:</p>
+      <pre><code>npm install @soul/cursor-components</code></pre>
+    </section>
+
+    <section id="usage">
+      <h2>Usage</h2>
+      
+      <h3>HTML</h3>
+      <pre><code>&lt;!-- Include the component --&gt;
+&lt;script type="module" src="path/to/soul-cursor-components.js"&gt;&lt;/script&gt;
+
+&lt;!-- Use the component --&gt;
+&lt;main-navigation active="dashboard"&gt;&lt;/main-navigation&gt;</code></pre>
+
+      <h3>React</h3>
+      <pre><code>import '@soul/cursor-components';
+
+function App() {
+  const handleNavChange = (e) => {
+    console.log('Navigation changed:', e.detail.item);
+  };
+
+  return (
+    &lt;main-navigation 
+      active="dashboard"
+      onNav-change={handleNavChange}
+    /&gt;
+  );
+}</code></pre>
+
+      <h3>Vue</h3>
+      <pre><code>&lt;template&gt;
+  &lt;main-navigation 
+    active="dashboard"
+    @nav-change="handleNavChange"
+  &gt;&lt;/main-navigation&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import '@soul/cursor-components';
+
+export default {
+  methods: {
+    handleNavChange(e) {
+      console.log('Navigation changed:', e.detail.item);
+    }
+  }
+}
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <section id="properties">
+      <h2>Properties</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>active</code></td>
+            <td>string</td>
+            <td>null</td>
+            <td>ID of the currently active navigation item</td>
+          </tr>
+          <tr>
+            <td><code>fixed</code></td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>Whether the navigation should be fixed positioned</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="events">
+      <h2>Events</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Detail</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>nav-change</code></td>
+            <td><code>{ item: string }</code></td>
+            <td>Fired when a navigation item is clicked</td>
+          </tr>
+          <tr>
+            <td><code>avatar-click</code></td>
+            <td>-</td>
+            <td>Fired when the user avatar is clicked</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Example</h3>
+      <pre><code>const nav = document.querySelector('main-navigation');
+
+nav.addEventListener('nav-change', (e) => {
+  console.log('Navigation changed to:', e.detail.item);
+});
+
+nav.addEventListener('avatar-click', () => {
+  console.log('Avatar clicked');
+});</code></pre>
+    </section>
+
+    <section id="methods">
+      <h2>Methods</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Parameters</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>setActive()</code></td>
+            <td>itemId: string</td>
+            <td>Programmatically set the active navigation item</td>
+          </tr>
+          <tr>
+            <td><code>getActive()</code></td>
+            <td>-</td>
+            <td>Get the currently active item ID</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Example</h3>
+      <pre><code>const nav = document.querySelector('main-navigation');
+
+// Set active item
+nav.setActive('dashboard');
+
+// Get current active item
+const activeItem = nav.getActive();
+console.log('Active item:', activeItem);</code></pre>
+    </section>
+
+    <section id="navigation-items">
+      <h2>Available Navigation Items</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Item ID</th>
+            <th>Label</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>command-center</code></td>
+            <td>Command Center</td>
+            <td>Main command center dashboard</td>
+          </tr>
+          <tr>
+            <td><code>dashboard</code></td>
+            <td>Dashboard</td>
+            <td>Analytics dashboard</td>
+          </tr>
+          <tr>
+            <td><code>analytics</code></td>
+            <td>Analytics</td>
+            <td>Unified analytics</td>
+          </tr>
+          <tr>
+            <td><code>publisher</code></td>
+            <td>Publisher</td>
+            <td>Content publisher</td>
+          </tr>
+          <tr>
+            <td><code>community</code></td>
+            <td>Community</td>
+            <td>Community management</td>
+          </tr>
+          <tr>
+            <td><code>care</code></td>
+            <td>Care</td>
+            <td>Customer care</td>
+          </tr>
+          <tr>
+            <td><code>content</code></td>
+            <td>Content</td>
+            <td>Content management</td>
+          </tr>
+          <tr>
+            <td><code>ucg</code></td>
+            <td>UCG</td>
+            <td>User generated content</td>
+          </tr>
+          <tr>
+            <td><code>bot</code></td>
+            <td>Bot</td>
+            <td>Bot management</td>
+          </tr>
+          <tr>
+            <td><code>reviews</code></td>
+            <td>Reviews</td>
+            <td>Ratings & reviews</td>
+          </tr>
+          <tr>
+            <td><code>add</code></td>
+            <td>Add</td>
+            <td>Add new item</td>
+          </tr>
+          <tr>
+            <td><code>help</code></td>
+            <td>Help</td>
+            <td>Help & support</td>
+          </tr>
+          <tr>
+            <td><code>settings</code></td>
+            <td>Settings</td>
+            <td>Application settings</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script type="module" src="../src/index.js"></script>
+  <script>
+    // Event logging
+    const nav = document.getElementById('main-nav');
+    const logContainer = document.getElementById('log-container');
+
+    function addLog(eventName, detail = '') {
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      entry.innerHTML = `
+        <span class="timestamp">[${timestamp}]</span> 
+        <span class="event-name">${eventName}</span>
+        ${detail ? ` → ${detail}` : ''}
+      `;
+      
+      if (logContainer.firstChild.tagName === 'P') {
+        logContainer.innerHTML = '';
+      }
+      
+      logContainer.insertBefore(entry, logContainer.firstChild);
+    }
+
+    nav.addEventListener('nav-change', (e) => {
+      addLog('nav-change', `item: "${e.detail.item}"`);
+    });
+
+    nav.addEventListener('avatar-click', () => {
+      addLog('avatar-click');
+    });
+
+    // Initial log
+    setTimeout(() => {
+      addLog('Component loaded', `active: "${nav.getActive() || 'null'}"`);
+    }, 100);
+  </script>
+</body>
+</html>
+
