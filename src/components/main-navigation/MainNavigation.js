@@ -2,7 +2,7 @@ class MainNavigation extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.activeItem = null;
+    this.activeItem = this.getAttribute('active') || null;
   }
 
   static get observedAttributes() {
@@ -53,14 +53,15 @@ class MainNavigation extends HTMLElement {
       }
 
       .nav-container {
-        width: 56px;
+        width: 48px;
         min-height: 600px;
         height: 100%;
-        background: #1C1C1E;
+        background: #2B2B2E;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 12px 0;
+        padding: 8px 0;
+        box-sizing: border-box;
       }
       
       :host([fixed]) .nav-container {
@@ -73,22 +74,22 @@ class MainNavigation extends HTMLElement {
       .nav-items {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 2px;
         width: 100%;
-        padding: 0 8px;
+        padding: 0 6px;
       }
 
       .nav-separator {
         height: 1px;
         background: rgba(255, 255, 255, 0.1);
-        width: 40px;
-        margin: 8px 0;
+        width: calc(100% - 12px);
+        margin: 6px auto;
       }
 
       .nav-item {
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -101,7 +102,7 @@ class MainNavigation extends HTMLElement {
       }
 
       .nav-item:hover {
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.05);
       }
 
       .nav-item.active {
@@ -113,10 +114,13 @@ class MainNavigation extends HTMLElement {
       }
 
       .nav-icon {
-        width: 20px;
-        height: 20px;
-        color: #A3A3A3;
+        width: 24px;
+        height: 24px;
+        color: #9D9DA0;
         transition: color 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .nav-item:hover .nav-icon {
@@ -130,7 +134,7 @@ class MainNavigation extends HTMLElement {
       /* Plus Button */
       .nav-item.plus-button {
         background: #0F62FE;
-        margin-top: 8px;
+        margin-top: 6px;
       }
 
       .nav-item.plus-button:hover {
@@ -146,18 +150,19 @@ class MainNavigation extends HTMLElement {
         margin-top: auto;
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 2px;
         width: 100%;
-        padding: 0 8px;
+        padding: 0 6px;
       }
 
       .nav-avatar {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         overflow: hidden;
         position: relative;
         cursor: pointer;
+        margin-top: 6px;
       }
 
       .nav-avatar img {
@@ -168,19 +173,20 @@ class MainNavigation extends HTMLElement {
 
       .nav-badge {
         position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 16px;
-        height: 16px;
+        bottom: -2px;
+        right: -2px;
+        min-width: 18px;
+        height: 18px;
         background: #DA1E28;
-        border-radius: 50%;
-        border: 2px solid #1C1C1E;
+        border-radius: 9px;
+        border: 2px solid #2B2B2E;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 9px;
+        font-size: 10px;
         font-weight: 700;
         color: white;
+        padding: 0 4px;
       }
 
       /* Spacer */
@@ -201,12 +207,14 @@ class MainNavigation extends HTMLElement {
     return `
       <nav class="nav-container">
         <div class="nav-items">
-          <!-- Dashboard / Main Icon -->
-          <button class="nav-item ${this.activeItem === 'dashboard' ? 'active' : ''}" data-item="dashboard">
+          <!-- Command Center / Dashboard -->
+          <button class="nav-item ${this.activeItem === 'dashboard' ? 'active' : ''}" data-item="dashboard" title="Command Center">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2"/>
-                <circle cx="10" cy="10" r="3" fill="currentColor"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M7 3H5C3.89543 3 3 3.89543 3 5V7C3 8.10457 3.89543 9 5 9H7C8.10457 9 9 8.10457 9 7V5C9 3.89543 8.10457 3 7 3Z" fill="currentColor"/>
+                <path d="M7 15H5C3.89543 15 3 15.8954 3 17V19C3 20.1046 3.89543 21 5 21H7C8.10457 21 9 20.1046 9 19V17C9 15.8954 8.10457 15 7 15Z" fill="currentColor"/>
+                <path d="M15 9H19C20.1046 9 21 8.10457 21 7V5C21 3.89543 20.1046 3 19 3H15C13.8954 3 13 3.89543 13 5V7C13 8.10457 13.8954 9 15 9Z" fill="currentColor"/>
+                <path d="M19 15H15C13.8954 15 13 15.8954 13 17V19C13 20.1046 13.8954 21 15 21H19C20.1046 21 21 20.1046 21 19V17C21 15.8954 20.1046 15 19 15Z" fill="currentColor"/>
               </svg>
             </div>
           </button>
@@ -214,7 +222,7 @@ class MainNavigation extends HTMLElement {
           <div class="nav-separator"></div>
 
           <!-- Home -->
-          <button class="nav-item ${this.activeItem === 'home' ? 'active' : ''}" data-item="home">
+          <button class="nav-item ${this.activeItem === 'home' ? 'active' : ''}" data-item="home" title="Home">
             <div class="nav-icon">
               <svg viewBox="0 0 20 20" fill="none">
                 <path d="M3 10L10 3L17 10V18H13V13H7V18H3V10Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
@@ -222,110 +230,111 @@ class MainNavigation extends HTMLElement {
             </div>
           </button>
 
-          <!-- Grid / Dashboard -->
-          <button class="nav-item ${this.activeItem === 'grid' ? 'active' : ''}" data-item="grid">
+          <!-- Grid / Widgets -->
+          <button class="nav-item ${this.activeItem === 'widgets' ? 'active' : ''}" data-item="widgets" title="Widgets">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <rect x="3" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
-                <rect x="11" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
-                <rect x="3" y="11" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
-                <rect x="11" y="11" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
               </svg>
             </div>
           </button>
 
-          <!-- Analytics -->
-          <button class="nav-item ${this.activeItem === 'analytics' ? 'active' : ''}" data-item="analytics">
+          <!-- Analytics / Chart -->
+          <button class="nav-item ${this.activeItem === 'analytics' ? 'active' : ''}" data-item="analytics" title="Analytics">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <path d="M3 15L7 11L11 15L17 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M14 7H17V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M3 3V18C3 19.1046 3.89543 20 5 20H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M7 14L11 10L15 14L21 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </button>
 
-          <!-- Timer / Schedule -->
-          <button class="nav-item ${this.activeItem === 'schedule' ? 'active' : ''}" data-item="schedule">
+          <!-- Schedule / Timer -->
+          <button class="nav-item ${this.activeItem === 'schedule' ? 'active' : ''}" data-item="schedule" title="Schedule">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M10 6V10L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M12 7V12L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </div>
           </button>
 
           <!-- Network / Connections -->
-          <button class="nav-item ${this.activeItem === 'network' ? 'active' : ''}" data-item="network">
+          <button class="nav-item ${this.activeItem === 'network' ? 'active' : ''}" data-item="network" title="Network">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="4" r="2" fill="currentColor"/>
-                <circle cx="4" cy="16" r="2" fill="currentColor"/>
-                <circle cx="16" cy="16" r="2" fill="currentColor"/>
-                <path d="M10 6V10M10 10L4 14M10 10L16 14" stroke="currentColor" stroke-width="1.5"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="5" r="2" fill="currentColor"/>
+                <circle cx="5" cy="19" r="2" fill="currentColor"/>
+                <circle cx="19" cy="19" r="2" fill="currentColor"/>
+                <path d="M12 7V13M12 13L5 17M12 13L19 17" stroke="currentColor" stroke-width="1.5"/>
               </svg>
             </div>
           </button>
 
           <!-- Bell / Notifications -->
-          <button class="nav-item ${this.activeItem === 'notifications' ? 'active' : ''}" data-item="notifications">
+          <button class="nav-item ${this.activeItem === 'notifications' ? 'active' : ''}" data-item="notifications" title="Notifications">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <path d="M10 3C8 3 6.5 4.5 6.5 6.5V11L5 13H15L13.5 11V6.5C13.5 4.5 12 3 10 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                <path d="M8.5 15C8.5 16.1 9.4 17 10.5 17C11.6 17 12.5 16.1 12.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </button>
 
-          <!-- Calendar / Events -->
-          <button class="nav-item ${this.activeItem === 'calendar' ? 'active' : ''}" data-item="calendar">
+          <!-- Calendar -->
+          <button class="nav-item ${this.activeItem === 'calendar' ? 'active' : ''}" data-item="calendar" title="Calendar">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M3 8H17" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M7 3V5M13 3V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="6" width="18" height="15" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M3 10H21" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M8 3V7M16 3V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </div>
           </button>
 
           <!-- Share / Social -->
-          <button class="nav-item ${this.activeItem === 'share' ? 'active' : ''}" data-item="share">
+          <button class="nav-item ${this.activeItem === 'share' ? 'active' : ''}" data-item="share" title="Share">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <circle cx="15" cy="5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
-                <circle cx="5" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/>
-                <circle cx="15" cy="15" r="2.5" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M7.5 11L12.5 14M7.5 9L12.5 6" stroke="currentColor" stroke-width="1.5"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="18" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="18" cy="18" r="3" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M8.7 13.5L15.3 16.5M8.7 10.5L15.3 7.5" stroke="currentColor" stroke-width="1.5"/>
               </svg>
             </div>
           </button>
 
-          <!-- Robot / AI -->
-          <button class="nav-item ${this.activeItem === 'ai' ? 'active' : ''}" data-item="ai">
+          <!-- Robot / Bot -->
+          <button class="nav-item ${this.activeItem === 'bot' ? 'active' : ''}" data-item="bot" title="Bot">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <rect x="5" y="7" width="10" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/>
-                <circle cx="8" cy="11" r="1" fill="currentColor"/>
-                <circle cx="12" cy="11" r="1" fill="currentColor"/>
-                <path d="M10 4V7M7 4H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="7" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="10" cy="13" r="1" fill="currentColor"/>
+                <circle cx="14" cy="13" r="1" fill="currentColor"/>
+                <path d="M12 5V9M9 5H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M7 15H5M19 15H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </div>
           </button>
 
           <!-- Star / Favorites -->
-          <button class="nav-item ${this.activeItem === 'favorites' ? 'active' : ''}" data-item="favorites">
+          <button class="nav-item ${this.activeItem === 'favorites' ? 'active' : ''}" data-item="favorites" title="Favorites">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <path d="M10 3L12 7L16.5 7.5L13 11L14 16L10 13.5L6 16L7 11L3.5 7.5L8 7L10 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
               </svg>
             </div>
           </button>
         </div>
 
         <!-- Plus Button -->
-        <button class="nav-item plus-button" data-item="add">
+        <button class="nav-item plus-button" data-item="add" title="Add">
           <div class="nav-icon">
-            <svg viewBox="0 0 20 20" fill="none">
-              <path d="M10 5V15M5 10H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
             </svg>
           </div>
         </button>
@@ -335,38 +344,38 @@ class MainNavigation extends HTMLElement {
         <!-- Bottom Section -->
         <div class="nav-bottom">
           <!-- Eye / View -->
-          <button class="nav-item ${this.activeItem === 'view' ? 'active' : ''}" data-item="view">
+          <button class="nav-item ${this.activeItem === 'view' ? 'active' : ''}" data-item="view" title="View">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <path d="M10 7C8 7 6 8 4 10C6 12 8 13 10 13C12 13 14 12 16 10C14 8 12 7 10 7Z" stroke="currentColor" stroke-width="1.5"/>
-                <circle cx="10" cy="10" r="2" stroke="currentColor" stroke-width="1.5"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/>
               </svg>
             </div>
           </button>
 
           <!-- Help / Question -->
-          <button class="nav-item ${this.activeItem === 'help' ? 'active' : ''}" data-item="help">
+          <button class="nav-item ${this.activeItem === 'help' ? 'active' : ''}" data-item="help" title="Help">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M10 14V14.01M10 11C10 9.5 12 9.5 12 8C12 7 11 6 10 6C9 6 8 7 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M12 17V17.01M12 14C12 12.5 14 12.5 14 10.5C14 9.5 13 8.5 12 8.5C11 8.5 10 9.5 10 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </div>
           </button>
 
           <!-- Settings -->
-          <button class="nav-item ${this.activeItem === 'settings' ? 'active' : ''}" data-item="settings">
+          <button class="nav-item ${this.activeItem === 'settings' ? 'active' : ''}" data-item="settings" title="Settings">
             <div class="nav-icon">
-              <svg viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="2" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M10 3V5M10 15V17M3 10H5M15 10H17M5.5 5.5L6.9 6.9M13.1 13.1L14.5 14.5M14.5 5.5L13.1 6.9M6.9 13.1L5.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M12 4V6M12 18V20M4 12H6M18 12H20M6.34 6.34L7.76 7.76M16.24 16.24L17.66 17.66M17.66 6.34L16.24 7.76M7.76 16.24L6.34 17.66" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </div>
           </button>
 
           <!-- Avatar with Badge -->
           <div class="nav-avatar">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect fill='%230F62FE' width='40' height='40'/%3E%3Ctext x='50%25' y='50%25' dy='.1em' fill='white' font-family='Arial' font-size='18' text-anchor='middle' dominant-baseline='middle'%3EJC%3C/text%3E%3C/svg%3E" alt="User avatar">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Crect fill='%23FFA500' width='36' height='36' rx='18'/%3E%3Ctext x='50%25' y='50%25' dy='.1em' fill='white' font-family='Arial, sans-serif' font-size='16' font-weight='600' text-anchor='middle' dominant-baseline='middle'%3EJC%3C/text%3E%3C/svg%3E" alt="User avatar">
             <span class="nav-badge">12</span>
           </div>
         </div>
@@ -375,7 +384,7 @@ class MainNavigation extends HTMLElement {
   }
 
   updateActiveState() {
-    const items = this.shadowRoot.querySelectorAll('.nav-item');
+    const items = this.shadowRoot.querySelectorAll('.nav-item[data-item]');
     items.forEach(item => {
       if (item.dataset.item === this.activeItem) {
         item.classList.add('active');
@@ -415,4 +424,3 @@ class MainNavigation extends HTMLElement {
 customElements.define('main-navigation', MainNavigation);
 
 export default MainNavigation;
-
