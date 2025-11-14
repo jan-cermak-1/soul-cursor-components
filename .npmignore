@@ -1,0 +1,9 @@
+src/
+demo/
+.github/
+vite.config.js
+vite.demo.config.js
+.gitignore
+*.md
+!README.md
+

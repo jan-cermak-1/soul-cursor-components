@@ -1,0 +1,43 @@
+{
+  "name": "@soul/components",
+  "version": "1.0.0",
+  "description": "Modern Web Components library for reusable UI components",
+  "type": "module",
+  "main": "./dist/soul-components.umd.js",
+  "module": "./dist/soul-components.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/soul-components.es.js",
+      "require": "./dist/soul-components.umd.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "demo:dev": "vite demo",
+    "demo:build": "vite build --config vite.demo.config.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "web-components",
+    "components",
+    "ui",
+    "design-system",
+    "soul"
+  ],
+  "author": "Soul Team",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/soul-cursor-components.git"
+  },
+  "homepage": "https://yourusername.github.io/soul-cursor-components/"
+}
+
