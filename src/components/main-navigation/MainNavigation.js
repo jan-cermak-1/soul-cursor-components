@@ -54,15 +54,20 @@ class MainNavigation extends HTMLElement {
 
       .nav-container {
         width: 56px;
-        height: 100vh;
+        min-height: 600px;
+        height: 100%;
         background: #1C1C1E;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 12px 0;
+      }
+      
+      :host([fixed]) .nav-container {
         position: fixed;
         left: 0;
         top: 0;
+        height: 100vh;
       }
 
       .nav-items {
