@@ -209,29 +209,26 @@ class MainNavigation extends HTMLElement {
         flex-shrink: 0;
       }
 
-      /* SVG paths should use currentColor for theming */
+      /* SVG icons use currentColor - default gray */
       .nav-icon svg {
         color: #9D9DA0;
       }
 
-      .nav-icon svg path:not([fill*="url"]):not([fill^="#42"]):not([fill^="#66"]):not([fill^="#00"]):not([fill="none"]) {
-        fill: currentColor;
-      }
-
-      /* Hover effect on individual items - works when nav is open */
-      .nav-item:hover .nav-icon {
+      /* Hover effect on individual items - change to white */
+      .nav-item:hover .nav-icon svg {
         color: #F9F9FA;
       }
 
-      .nav-item:hover .nav-icon svg path:not([fill*="url"]):not([fill^="#42"]):not([fill^="#66"]):not([fill^="#00"]):not([fill="none"]) {
+      /* Override gradients on hover - make icons white */
+      .nav-item:hover .nav-icon svg path[fill*="url"] {
         fill: #F9F9FA;
       }
 
-      .nav-item.active .nav-icon {
+      .nav-item.active .nav-icon svg {
         color: #F9F9FA;
       }
 
-      .nav-item.active .nav-icon svg path:not([fill*="url"]):not([fill^="#42"]):not([fill^="#66"]):not([fill^="#00"]):not([fill="none"]) {
+      .nav-item.active .nav-icon svg path[fill*="url"] {
         fill: #F9F9FA;
       }
 
