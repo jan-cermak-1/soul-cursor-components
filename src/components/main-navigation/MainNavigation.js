@@ -201,6 +201,14 @@ class MainNavigation extends HTMLElement {
         flex-shrink: 0;
       }
 
+      /* SVG Icons - ensure consistent sizing */
+      .nav-icon svg {
+        width: 24px;
+        height: 24px;
+        display: block;
+        flex-shrink: 0;
+      }
+
       /* Hover effect on individual items - works when nav is open */
       .nav-item:hover .nav-icon {
         color: #F9F9FA;
@@ -262,6 +270,11 @@ class MainNavigation extends HTMLElement {
 
       .nav-add-button .nav-icon {
         color: #F9F9FA;
+        width: 18px;
+        height: 18px;
+      }
+
+      .nav-add-button .nav-icon svg {
         width: 18px;
         height: 18px;
       }
@@ -367,11 +380,15 @@ class MainNavigation extends HTMLElement {
         color: #F9F9FA;
       }
 
-      /* SVG Icons */
+      /* SVG Icons - general styling */
       svg {
-        width: 100%;
-        height: 100%;
         fill: currentColor;
+      }
+
+      /* Logo SVG - specific sizing */
+      .nav-logo-icon svg {
+        width: 24.889px;
+        height: 24.889px;
       }
     `;
   }
