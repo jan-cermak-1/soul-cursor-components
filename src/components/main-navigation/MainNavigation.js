@@ -168,7 +168,7 @@ class MainNavigation extends HTMLElement {
         align-items: center;
         gap: 9px;
         cursor: pointer;
-        transition: background 0.2s ease;
+        transition: background 0.2s ease, color 0.2s ease;
         background: transparent;
         border: none;
         padding: 6px;
@@ -176,6 +176,7 @@ class MainNavigation extends HTMLElement {
         overflow: hidden;
       }
 
+      /* Hover effect on items - works in both closed and open states */
       .nav-item:hover {
         background: rgba(255, 255, 255, 0.05);
       }
@@ -200,6 +201,7 @@ class MainNavigation extends HTMLElement {
         flex-shrink: 0;
       }
 
+      /* Hover effect on individual items - works when nav is open */
       .nav-item:hover .nav-icon {
         color: #F9F9FA;
       }
@@ -218,13 +220,15 @@ class MainNavigation extends HTMLElement {
         color: #9D9DA0;
         white-space: nowrap;
         opacity: 0;
-        transition: opacity 0.3s ease 0.1s;
+        transition: opacity 0.3s ease 0.1s, color 0.2s ease;
       }
 
+      /* Show labels when nav container is hovered (open state) */
       .nav-container:hover .nav-label {
         opacity: 1;
       }
 
+      /* Hover effect on individual items - change label color */
       .nav-item:hover .nav-label {
         color: #F9F9FA;
       }
@@ -350,7 +354,7 @@ class MainNavigation extends HTMLElement {
         color: #9D9DA0;
         white-space: nowrap;
         opacity: 0;
-        transition: opacity 0.3s ease 0.1s;
+        transition: opacity 0.3s ease 0.1s, color 0.2s ease;
         flex: 1;
       }
 
@@ -358,6 +362,7 @@ class MainNavigation extends HTMLElement {
         opacity: 1;
       }
 
+      /* Hover effect on avatar wrapper - change user name color */
       .nav-avatar-wrapper:hover .nav-user-name {
         color: #F9F9FA;
       }
