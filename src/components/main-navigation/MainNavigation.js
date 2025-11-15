@@ -210,12 +210,16 @@ class MainNavigation extends HTMLElement {
       }
 
       /* SVG icons use currentColor - default gray */
-      .nav-icon svg {
+      .nav-icon {
         color: #9D9DA0;
       }
 
+      .nav-icon svg {
+        fill: currentColor;
+      }
+
       /* Hover effect on individual items - change to white */
-      .nav-item:hover .nav-icon svg {
+      .nav-item:hover .nav-icon {
         color: #F9F9FA;
       }
 
@@ -224,7 +228,7 @@ class MainNavigation extends HTMLElement {
         fill: #F9F9FA;
       }
 
-      .nav-item.active .nav-icon svg {
+      .nav-item.active .nav-icon {
         color: #F9F9FA;
       }
 
@@ -392,11 +396,6 @@ class MainNavigation extends HTMLElement {
       /* Hover effect on avatar wrapper - change user name color */
       .nav-avatar-wrapper:hover .nav-user-name {
         color: #F9F9FA;
-      }
-
-      /* SVG Icons - general styling */
-      svg {
-        fill: currentColor;
       }
 
       /* Logo SVG - specific sizing */
